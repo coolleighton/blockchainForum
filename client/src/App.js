@@ -1,22 +1,30 @@
+import "./App.css";
 import React, { useEffect, useState } from "react";
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
 
   useEffect(() => {
-    fetch("/api")
+    fetch("/api/messages")
       .then((response) => response.json())
       .then((data) => {
         setBackendData(data);
+        console.log(data);
       });
   }, []);
 
   return (
     <div>
-      {typeof backendData.users === "undefined" ? (
+      {typeof backendData === "undefined" ? (
         <p>Loading...</p>
       ) : (
-        backendData.users.map((user, i) => <p key={i}>{user}</p>)
+        backendData.map((data, i) => (
+          <div key={i}>
+            <h1>{data.author}</h1>
+            <p>{data.text}</p>
+            <p>{data.posted}</p>
+          </div>
+        ))
       )}
     </div>
   );
