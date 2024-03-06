@@ -1,5 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
+import Main from "./components/Main";
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
@@ -15,16 +16,12 @@ function App() {
 
   return (
     <div>
-      {typeof backendData === "undefined" ? (
-        <p>Loading...</p>
+      {backendData ? (
+        <Main backendData={backendData}></Main>
       ) : (
-        backendData.map((data, i) => (
-          <div key={i}>
-            <h1>{data.author}</h1>
-            <p>{data.text}</p>
-            <p>{data.posted}</p>
-          </div>
-        ))
+        <div>
+          <h1>Loading...</h1>
+        </div>
       )}
     </div>
   );
