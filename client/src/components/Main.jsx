@@ -1,5 +1,6 @@
 import logo from "../images/logo.png";
 import heroImage from "../images/heroImage.png";
+import messageIcon from "../images/messageIcon.png";
 
 const Main = ({ backendData }) => {
   return (
@@ -36,20 +37,40 @@ const Main = ({ backendData }) => {
 
         <img className="h-full pt-16" src={heroImage}></img>
       </div>
-
-      <div className="bg-white">
-        <div className="w-[70vw] mx-auto">
-          {typeof backendData === "undefined" ? (
-            <p>Loading...</p>
-          ) : (
-            backendData.map((data, i) => (
-              <div key={i}>
-                <h1 className="text-4xl">{data.author}</h1>
-                <p>{data.text}</p>
-                <p>{data.posted}</p>
-              </div>
-            ))
-          )}
+      <div className="bg-white pt-12">
+        <div className="w-[70vw] mx-auto flex">
+          <div className="w-[70%]">
+            <h3 className="text-3xl font-semibold pb-2">
+              Browse Forum Messages
+            </h3>
+            {typeof backendData === "undefined" ? (
+              <p>Loading...</p>
+            ) : (
+              backendData.map((data, i) => (
+                <div
+                  key={i}
+                  className="border-2 mt-6 p-4 rounded-lg hover:bg-slate-100 duration-200 cursor-pointer"
+                >
+                  <img src={messageIcon} className="h-8 mb-2"></img>
+                  <p className="text-xl font-semibold">
+                    This will be the title?
+                  </p>
+                  <p className="text-lg">{data.text}</p>
+                  <div className="flex">
+                    <p className="text-md mr-2">{data.author}</p>
+                    <p className="text-md">{data.posted}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+          <div>
+            <h2>News</h2>
+            <p>Whats new at the blochain in 2024</p>
+            <p>Whats new at the blochain in 2024</p>
+            <p>Whats new at the blochain in 2024</p>
+            <p>Whats new at the blochain in 2024</p>
+          </div>
         </div>
       </div>
     </div>
