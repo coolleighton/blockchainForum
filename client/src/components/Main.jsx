@@ -1,6 +1,7 @@
 import logo from "../images/logo.png";
 import heroImage from "../images/heroImage.png";
 import messageIcon from "../images/messageIcon.png";
+import arrowRight from "../images/arrowRight.png";
 
 const Main = ({ backendData }) => {
   return (
@@ -13,7 +14,7 @@ const Main = ({ backendData }) => {
           <img src={logo} className="h-8" alt="logo"></img>
           <h3 className="text-white text-xl pl-2 font-semibold">BLOCKCHAIN</h3>
           <h3 className="text-white text-3xl pl-3 pb-1 font-thin">/</h3>
-          <h3 className="text-slate-300 text-md pl-3 pt-1"> FORUM</h3>
+          <h3 className="text-white text-md pl-3 pt-1"> FORUM</h3>
         </button>
         <div className="mr-4">
           <button className="mx-3">
@@ -38,7 +39,7 @@ const Main = ({ backendData }) => {
         <img className="h-full pt-16" src={heroImage}></img>
       </div>
       <div className="bg-white pt-12">
-        <div className="w-[70vw] mx-auto flex">
+        <div className="w-[70vw] mx-auto flex justify-between">
           <div className="w-[70%]">
             <h3 className="text-3xl font-semibold pb-2">
               Browse Forum Messages
@@ -49,9 +50,9 @@ const Main = ({ backendData }) => {
               backendData.map((data, i) => (
                 <div
                   key={i}
-                  className="border-2 mt-6 p-4 rounded-lg hover:bg-slate-100 duration-200 cursor-pointer"
+                  className="border-[1px] mt-6 p-4 rounded hover:bg-slate-100 duration-200 cursor-pointer"
                 >
-                  <img src={messageIcon} className="h-8 mb-2"></img>
+                  <img src={messageIcon} className="h-6 mb-2"></img>
                   <p className="text-xl font-semibold">
                     This will be the title?
                   </p>
@@ -64,12 +65,42 @@ const Main = ({ backendData }) => {
               ))
             )}
           </div>
-          <div>
-            <h2>News</h2>
-            <p>Whats new at the blochain in 2024</p>
-            <p>Whats new at the blochain in 2024</p>
-            <p>Whats new at the blochain in 2024</p>
-            <p>Whats new at the blochain in 2024</p>
+          <div className="bg-gray-200 h-fit w-[25%] py-6 flex flex-col justify-center items-center rounded">
+            <div>
+              <h2 className="text-2xl font-bold pb-2">News</h2>
+              <a href="https://pros.squarespace.com/blog/2024-web-design-trends">
+                <button className="flex items-center hover:brightness-0 duration-200 pt-2">
+                  <p className="font-semibold text-gray-600">
+                    Whats new at the blochain in 2024
+                  </p>
+                  <img src={arrowRight} className="h-6 pl-1"></img>
+                </button>
+              </a>
+              <a href="https://pros.squarespace.com/blog/2024-web-design-trends">
+                <button className="flex items-center hover:brightness-0 duration-200 pt-2">
+                  <p className="font-medium text-gray-600">
+                    Whats new at the blochain in 2024
+                  </p>
+                  <img src={arrowRight} className="h-6 pl-1"></img>
+                </button>
+              </a>
+              <a href="https://pros.squarespace.com/blog/2024-web-design-trends">
+                <button className="flex items-center hover:brightness-0 duration-200 pt-2">
+                  <p className="font-semibold text-gray-600">
+                    Whats new at the blochain in 2024
+                  </p>
+                  <img src={arrowRight} className="h-6 pl-1"></img>
+                </button>
+              </a>
+              <a href="https://pros.squarespace.com/blog/2024-web-design-trends">
+                <button className="flex items-center hover:brightness-0 duration-200 pt-2">
+                  <p className="font-semibold text-gray-600">
+                    Whats new at the blochain in 2024
+                  </p>
+                  <img src={arrowRight} className="h-6 pl-1"></img>
+                </button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
