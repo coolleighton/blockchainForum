@@ -2,20 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Thin"; /*Can be any text*/
+  src: local("roboto"), url("./fonts/Roboto-Thin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Regular"; /*Can be any text*/
+  src: local("roboto"), url("./fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Medium"; /*Can be any text*/
+  src: local("roboto"), url("./fonts/Roboto-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Light"; /*Can be any text*/
+  src: local("roboto"), url("./fonts/Roboto-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Bold"; /*Can be any text*/
+  src: local("roboto"), url("./fonts/Roboto-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Black"; /*Can be any text*/
+  src: local("roboto"), url("./fonts/Roboto-Black.ttf") format("truetype");
+}
+
 * {
   padding: 0;
   margin: 0;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.thin {
+  font-family: "Thin";
+}
+
+.medium {
+  font-family: "Medium";
+}
+
+.regular {
+  font-family: "Regular";
+}
+
+.bold {
+  font-family: "Bold";
+}
+
+.black {
+  font-family: "Black";
+}
+
+.light {
+  font-family: "Light";
 }
