@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const apiRoute = require("./routes/messages");
+const signupRoute = require("./routes/users");
 
 // connect to mongoDB
 mongoose.set("strictQuery", false);
@@ -34,7 +35,13 @@ const limiter = RateLimit({
 
 app.use(limiter); // Apply rate limiter to all requests
 
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
+// routes
 app.use("/api/messages", apiRoute);
+app.use("/api/users", signupRoute);
 
 app.listen(5000, () => {
   console.log("server started on 5000");

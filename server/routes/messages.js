@@ -4,7 +4,10 @@ const Message = require("../models/message");
 
 router.get("/", async (req, res) => {
   try {
-    const allMessages = await Message.find({}, "author text posted")
+    const allMessages = await Message.find(
+      {},
+      "author text posted upVotes downVotes comments"
+    )
       .sort({ author: 1 })
       .exec();
     res.json(allMessages);

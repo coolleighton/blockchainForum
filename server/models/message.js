@@ -7,6 +7,9 @@ const messageSchema = new Schema({
   author: { type: String, required: true, maxLength: 50 },
   text: { type: String, required: true, maxLength: 500 },
   posted: { type: String, required: true },
+  upVotes: { type: Number, required: true },
+  downVotes: { type: Number, required: true },
+  comments: [{ type: String, required: true }],
 });
 
 // Export model
