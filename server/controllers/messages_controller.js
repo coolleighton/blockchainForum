@@ -1,12 +1,17 @@
-const message = require("../models/message");
+const Message = require("../models/message");
 const asyncHandler = require("express-async-handler");
 
-/*exports.api = asyncHandler(async (req, res, next) => {
-  const allMessages = await message
-    .find({}, "author text posted upVotes downVotes comments")
-    .sort({ author: 1 })
-    .populate("author text posted upVotes downVotes comments")
-    .exec();
-
-  res.json(allMessages);
-})*/
+exports.api = asyncHandler(async (req, res, next) => {
+  try {
+    const allMessages = await Message.find(
+      {},
+      "author text posted upVotes downVotes comments"
+    )
+      .sort({ author: 1 })
+      .exec();
+    res.json(allMessages);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});

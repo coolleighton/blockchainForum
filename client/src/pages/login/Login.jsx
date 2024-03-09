@@ -47,6 +47,7 @@ const Login = () => {
               href="https://policies.google.com/terms?hl=en"
               target="_blank"
               className="underline"
+              rel="noreferrer"
             >
               Terms
             </a>{" "}
@@ -55,6 +56,7 @@ const Login = () => {
               href="https://policies.google.com/privacy?hl=en"
               target="_blank"
               className="underline"
+              rel="noreferrer"
             >
               Privacy
             </a>

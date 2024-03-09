@@ -1,8 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Message = require("../models/message");
 
-router.get("/", async (req, res) => {
+const messages_controller = require("../controllers/messages_controller");
+
+router.get("/", messages_controller.api);
+
+module.exports = router;
+
+/* router.get("/", async (req, res) => {
   try {
     const allMessages = await Message.find(
       {},
@@ -15,6 +20,4 @@ router.get("/", async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
   }
-});
-
-module.exports = router;
+}); */
