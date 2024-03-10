@@ -10,10 +10,23 @@ const Signup = () => {
           <h1 className="text-center bold text-2xl mb-8">
             Sign Up to the Blockchain Forum
           </h1>
-          <form className="w-[25rem]" action="" method="POST">
+          <form className="w-[25rem]" action="/sign-up" method="POST">
             <div className="flex-col">
-              <label className="block text-xs pb-2" for="email">
+              <label className="block text-xs pb-2" htmlFor="username">
                 Username*
+              </label>
+              <input
+                className="block mb-2 w-full px-1"
+                name="username"
+                placeholder="example123"
+                type="username"
+                required
+              />
+            </div>
+            <hr></hr>
+            <div className="flex-col">
+              <label className="block text-xs pb-2 mt-4" htmlFor="email">
+                E-mail*
               </label>
               <input
                 className="block mb-2 w-full px-1"
@@ -25,7 +38,7 @@ const Signup = () => {
             </div>
             <hr></hr>
             <div className="flex-col ">
-              <label className="block text-xs pb-2 mt-4" for="password">
+              <label className="block text-xs pb-2 mt-4" htmlFor="password">
                 Password*
               </label>
               <input

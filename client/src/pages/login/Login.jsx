@@ -10,22 +10,22 @@ const Login = () => {
           <h1 className="text-center bold text-2xl mb-8">
             Log in to Blockchain Forum
           </h1>
-          <form className="w-[25rem]" action="" method="POST">
+          <form className="w-[25rem]" action="/login" method="POST">
             <div className="flex-col">
-              <label className="block text-xs pb-2" for="email">
+              <label className="block text-xs pb-2" htmlFor="username">
                 Username*
               </label>
               <input
                 className="block mb-2 w-full px-1"
-                name="email"
-                placeholder="example@email.com"
-                type="email"
+                name="username"
+                placeholder="example123"
+                type="username"
                 required
               />
             </div>
             <hr></hr>
             <div className="flex-col ">
-              <label className="block text-xs pb-2 mt-4" for="password">
+              <label className="block text-xs pb-2 mt-4" htmlFor="password">
                 Password*
               </label>
               <input
@@ -38,7 +38,7 @@ const Login = () => {
             </div>
             <hr className="mb-8"></hr>
             <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200">
-              Sign Up
+              Login
             </button>
           </form>
           <p className="w-[20rem] text-center mx-auto mt-6 text-xs text-gray-500">

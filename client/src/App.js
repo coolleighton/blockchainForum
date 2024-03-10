@@ -7,9 +7,29 @@ import Login from "./pages/login/Login.jsx";
 
 function App() {
   const [backendData, setBackendData] = useState([{}]);
+  const [loggedIn, setLoggedIn] = useState();
 
   useEffect(() => {
-    fetch("/api/messages")
+    // Check if the user is logged in by sending a request to the backend
+    fetch("/checkAuth", {
+      method: "GET",
+      credentials: "include", // Include credentials (cookies) in the request
+    })
+      .then((response) => {
+        if (response.ok) {
+          setLoggedIn(true);
+        } else {
+          setLoggedIn(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error checking authentication:", error);
+        setLoggedIn(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("/messages")
       .then((response) => response.json())
       .then((data) => {
         setBackendData(data);
@@ -18,10 +38,36 @@ function App() {
       });
   }, []);
 
+  const handleLogout = () => {
+    console.log("clicked");
+    // Send a request to the backend to logout the user
+    fetch("/logout", {
+      method: "POST",
+      credentials: "include", // Include credentials (cookies) in the request
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.ok) {
+          setLoggedIn(false); // Update loggedIn state
+        } else {
+          console.error("Failed to logout");
+        }
+      })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
+  };
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Main backendData={backendData} />,
+      element: (
+        <Main
+          backendData={backendData}
+          loggedIn={loggedIn}
+          handleLogout={handleLogout}
+        />
+      ),
     },
     {
       path: "sign-up",

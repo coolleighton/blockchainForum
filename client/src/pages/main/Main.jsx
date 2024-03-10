@@ -7,10 +7,10 @@ import downArrow from "../../images/downArrow.png";
 
 import Header from "../../components/header.jsx";
 
-const Main = ({ backendData }) => {
+const Main = ({ backendData, loggedIn, handleLogout }) => {
   return (
     <div className="flex-col bg-black">
-      <Header></Header>
+      <Header loggedIn={loggedIn} handleLogout={handleLogout}></Header>
 
       <div className="h-[50vh] w-[70vw] mx-auto flex items-center justify-between">
         <div className="w-[30rem]">
