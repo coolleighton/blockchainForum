@@ -9,7 +9,15 @@ const messageSchema = new Schema({
   posted: { type: String, required: true },
   upVotes: { type: Number, required: true },
   downVotes: { type: Number, required: true },
-  comments: [{ type: String, required: true }],
+  comments: [
+    {
+      Comment: { type: String, required: true },
+      user: { type: String, required: true },
+      posted: { type: String, required: true },
+      upVotes: { type: Number, required: true },
+      downVotes: { type: Number, required: true },
+    },
+  ],
 });
 
 // Export model

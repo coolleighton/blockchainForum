@@ -58,7 +58,29 @@ async function createMessages() {
       "27/11/2021",
       80,
       15,
-      ["Great joke!", "That's so lame!", "Haha, made me chuckle!"]
+      [
+        {
+          Comment: "Great joke!",
+          user: "CryptoLover123",
+          posted: "27/11/2021",
+          upVotes: 4,
+          downVotes: 0,
+        },
+        {
+          Comment: "That's so lame!",
+          user: "SatoshiFanatic",
+          posted: "28/11/2021",
+          upVotes: 1,
+          downVotes: 2,
+        },
+        {
+          Comment: "Haha, made me chuckle!",
+          user: "NFTEnthusiast",
+          posted: "28/11/2021",
+          upVotes: 3,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       1,
@@ -67,7 +89,22 @@ async function createMessages() {
       "21/11/2021",
       90,
       10,
-      ["Good question!", "You should Google it!"]
+      [
+        {
+          Comment: "Good question!",
+          user: "BlockchainExpert",
+          posted: "21/11/2021",
+          upVotes: 5,
+          downVotes: 0,
+        },
+        {
+          Comment: "You should Google it!",
+          user: "CryptoNoob",
+          posted: "22/11/2021",
+          upVotes: 2,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       2,
@@ -76,7 +113,22 @@ async function createMessages() {
       "28/11/2021",
       70,
       20,
-      ["Informative post!", "Everybody knows this!"]
+      [
+        {
+          Comment: "Informative post!",
+          user: "CryptoJester",
+          posted: "29/11/2021",
+          upVotes: 3,
+          downVotes: 0,
+        },
+        {
+          Comment: "Everybody knows this!",
+          user: "CryptoLover123",
+          posted: "30/11/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       3,
@@ -85,7 +137,22 @@ async function createMessages() {
       "22/11/2021",
       85,
       12,
-      ["Interesting question!", "I've been wondering about this too!"]
+      [
+        {
+          Comment: "Interesting question!",
+          user: "CryptoLover123",
+          posted: "23/11/2021",
+          upVotes: 4,
+          downVotes: 0,
+        },
+        {
+          Comment: "I've been wondering about this too!",
+          user: "EthereumEnthusiast",
+          posted: "24/11/2021",
+          upVotes: 2,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       4,
@@ -94,7 +161,29 @@ async function createMessages() {
       "29/11/2021",
       60,
       25,
-      ["Hilarious!", "Not as good as the first one!", "Made me smile!"]
+      [
+        {
+          Comment: "Hilarious!",
+          user: "CryptoLover123",
+          posted: "30/11/2021",
+          upVotes: 3,
+          downVotes: 0,
+        },
+        {
+          Comment: "Not as good as the first one!",
+          user: "CryptoNinja",
+          posted: "01/12/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+        {
+          Comment: "Made me smile!",
+          user: "BitcoinBard",
+          posted: "02/12/2021",
+          upVotes: 2,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       5,
@@ -103,7 +192,15 @@ async function createMessages() {
       "24/11/2021",
       75,
       18,
-      ["I've been looking for this too!"]
+      [
+        {
+          Comment: "I've been looking for this too!",
+          user: "CryptoLover123",
+          posted: "25/11/2021",
+          upVotes: 3,
+          downVotes: 0,
+        },
+      ]
     ),
     messageCreate(
       6,
@@ -112,7 +209,29 @@ async function createMessages() {
       "01/12/2021",
       70,
       15,
-      ["LOL!", "That's a clever one!", "Made my day!"]
+      [
+        {
+          Comment: "LOL!",
+          user: "CryptoChuckles",
+          posted: "02/12/2021",
+          upVotes: 4,
+          downVotes: 0,
+        },
+        {
+          Comment: "That's a clever one!",
+          user: "BitcoinBard",
+          posted: "03/12/2021",
+          upVotes: 2,
+          downVotes: 1,
+        },
+        {
+          Comment: "Made my day!",
+          user: "CryptoLover123",
+          posted: "04/12/2021",
+          upVotes: 1,
+          downVotes: 2,
+        },
+      ]
     ),
     messageCreate(
       7,
@@ -121,7 +240,22 @@ async function createMessages() {
       "30/11/2021",
       95,
       5,
-      ["Good one!", "Keep 'em coming!"]
+      [
+        {
+          Comment: "Good one!",
+          user: "BitcoinBard",
+          posted: "01/12/2021",
+          upVotes: 3,
+          downVotes: 0,
+        },
+        {
+          Comment: "Keep 'em coming!",
+          user: "CryptoLover123",
+          posted: "02/12/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       8,
@@ -130,7 +264,22 @@ async function createMessages() {
       "02/12/2021",
       60,
       30,
-      ["Brilliant!", "Keep the jokes rolling!"]
+      [
+        {
+          Comment: "Brilliant!",
+          user: "CryptoMemeLord",
+          posted: "03/12/2021",
+          upVotes: 4,
+          downVotes: 0,
+        },
+        {
+          Comment: "Keep the jokes rolling!",
+          user: "CryptoLover123",
+          posted: "04/12/2021",
+          upVotes: 2,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       9,
@@ -139,7 +288,22 @@ async function createMessages() {
       "03/12/2021",
       80,
       20,
-      ["Funny and creative!", "Made me laugh out loud!"]
+      [
+        {
+          Comment: "Funny and creative!",
+          user: "NFTEnthusiast",
+          posted: "04/12/2021",
+          upVotes: 5,
+          downVotes: 0,
+        },
+        {
+          Comment: "Made me laugh out loud!",
+          user: "CryptoLover123",
+          posted: "05/12/2021",
+          upVotes: 2,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       10,
@@ -148,7 +312,22 @@ async function createMessages() {
       "04/12/2021",
       85,
       15,
-      ["Nice one!", "Keep the humor flowing!"]
+      [
+        {
+          Comment: "Nice one!",
+          user: "CryptoLover123",
+          posted: "05/12/2021",
+          upVotes: 4,
+          downVotes: 0,
+        },
+        {
+          Comment: "Keep the humor flowing!",
+          user: "CryptoChuckles",
+          posted: "06/12/2021",
+          upVotes: 2,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       11,
@@ -157,7 +336,22 @@ async function createMessages() {
       "05/12/2021",
       90,
       10,
-      ["Helpful post!", "Thanks for sharing!"]
+      [
+        {
+          Comment: "Helpful post!",
+          user: "BlockchainExpert",
+          posted: "06/12/2021",
+          upVotes: 3,
+          downVotes: 0,
+        },
+        {
+          Comment: "Thanks for sharing!",
+          user: "CryptoLover123",
+          posted: "07/12/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       12,
@@ -166,7 +360,22 @@ async function createMessages() {
       "06/12/2021",
       40,
       5,
-      ["Good analogy!", "Interesting take!"]
+      [
+        {
+          Comment: "Good analogy!",
+          user: "BlockchainExpert",
+          posted: "07/12/2021",
+          upVotes: 2,
+          downVotes: 0,
+        },
+        {
+          Comment: "Interesting take!",
+          user: "CryptoLover123",
+          posted: "08/12/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       13,
@@ -175,7 +384,22 @@ async function createMessages() {
       "07/12/2021",
       55,
       20,
-      ["Clear explanation!", "Well done!"]
+      [
+        {
+          Comment: "Clear explanation!",
+          user: "CryptoLover123",
+          posted: "08/12/2021",
+          upVotes: 3,
+          downVotes: 0,
+        },
+        {
+          Comment: "Well done!",
+          user: "BlockchainExpert",
+          posted: "09/12/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       14,
@@ -184,7 +408,22 @@ async function createMessages() {
       "08/12/2021",
       70,
       8,
-      ["Haha, clever twist!", "Nice joke!"]
+      [
+        {
+          Comment: "Haha, clever twist!",
+          user: "CryptoLover123",
+          posted: "09/12/2021",
+          upVotes: 2,
+          downVotes: 0,
+        },
+        {
+          Comment: "Nice joke!",
+          user: "BlockchainBanter",
+          posted: "10/12/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       15,
@@ -193,7 +432,22 @@ async function createMessages() {
       "09/12/2021",
       75,
       15,
-      ["Great insights!", "Good analysis!"]
+      [
+        {
+          Comment: "Great insights!",
+          user: "CryptoLover123",
+          posted: "10/12/2021",
+          upVotes: 3,
+          downVotes: 0,
+        },
+        {
+          Comment: "Good analysis!",
+          user: "BitcoinBard",
+          posted: "11/12/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       16,
@@ -202,7 +456,22 @@ async function createMessages() {
       "10/12/2021",
       60,
       10,
-      ["Clever pun!", "Haha, encrypted jokes!"]
+      [
+        {
+          Comment: "Clever pun!",
+          user: "CryptoLover123",
+          posted: "11/12/2021",
+          upVotes: 2,
+          downVotes: 0,
+        },
+        {
+          Comment: "Haha, encrypted jokes!",
+          user: "BlockchainBanter",
+          posted: "12/12/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       17,
@@ -211,7 +480,22 @@ async function createMessages() {
       "25/11/2021",
       50,
       5,
-      ["Welcome to crypto!", "Sure, I'll recommend one!"]
+      [
+        {
+          Comment: "Welcome to crypto!",
+          user: "CryptoLover123",
+          posted: "26/11/2021",
+          upVotes: 3,
+          downVotes: 0,
+        },
+        {
+          Comment: "Sure, I'll recommend one!",
+          user: "StablecoinFan",
+          posted: "27/11/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       18,
@@ -220,7 +504,22 @@ async function createMessages() {
       "26/11/2021",
       70,
       10,
-      ["Repetitive question!", "Search for the answer first!"]
+      [
+        {
+          Comment: "Repetitive question!",
+          user: "CryptoLover123",
+          posted: "27/11/2021",
+          upVotes: 2,
+          downVotes: 0,
+        },
+        {
+          Comment: "Search for the answer first!",
+          user: "BitcoinBard",
+          posted: "28/11/2021",
+          upVotes: 1,
+          downVotes: 1,
+        },
+      ]
     ),
     messageCreate(
       19,
@@ -229,7 +528,22 @@ async function createMessages() {
       "21/11/2021",
       85,
       12,
-      ["Interesting question!", "I've been wondering about this too!"]
+      [
+        {
+          Comment: "Interesting question!",
+          user: "BlockchainExpert",
+          posted: "22/11/2021",
+          upVotes: 4,
+          downVotes: 0,
+        },
+        {
+          Comment: "I've been wondering about this too!",
+          user: "EthereumEnthusiast",
+          posted: "23/11/2021",
+          upVotes: 2,
+          downVotes: 1,
+        },
+      ]
     ),
   ]);
 }
