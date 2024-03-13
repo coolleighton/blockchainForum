@@ -4,8 +4,24 @@ import arrowRight from "../../images/arrowRight.png";
 
 import Header from "../../components/header.jsx";
 import Post from "../../components/Post.jsx";
+import PostForm from "../../components/PostForm.jsx";
+import { useState } from "react";
 
 const Main = ({ backendData, loggedIn, handleLogout }) => {
+  const [postFormActive, setPostFormActive] = useState(false);
+
+  const handleTogglePostForm = () => {
+    if (postFormActive === false) {
+      setPostFormActive(true);
+    } else {
+      setPostFormActive(false);
+    }
+  };
+
+  const handleOpenPostForm = () => {
+    setPostFormActive(true);
+  };
+
   return (
     <div className="flex-col bg-black">
       <Header loggedIn={loggedIn} handleLogout={handleLogout}></Header>
@@ -25,9 +41,22 @@ const Main = ({ backendData, loggedIn, handleLogout }) => {
           <div className="w-[70%]">
             <div className="flex justify-between">
               <h3 className="text-3xl bold pb-2">Browse Forum Messages</h3>
-              <button className="bg-black px-4 rounded hover:bg-gray-700 duration-200">
-                <p className="text-white regular">ASK A QUESTION</p>
+              <button
+                className="bg-black px-4 rounded hover:bg-gray-700 duration-200 text-white regular"
+                onClick={() => handleOpenPostForm()}
+              >
+                ASK A QUESTION
               </button>
+            </div>
+
+            <div>
+              {postFormActive ? (
+                <PostForm
+                  handleTogglePostForm={handleTogglePostForm}
+                ></PostForm>
+              ) : (
+                <></>
+              )}
             </div>
 
             {typeof backendData === "undefined" ? (
