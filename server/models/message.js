@@ -5,17 +5,18 @@ const Schema = mongoose.Schema;
 const messageSchema = new Schema({
   index: { type: Number, required: true },
   author: { type: String, required: true, maxLength: 50 },
+  title: { type: String, required: true, maxLength: 500 },
   text: { type: String, required: true, maxLength: 500 },
   posted: { type: String, required: true },
   upVotes: { type: Number, required: true },
   downVotes: { type: Number, required: true },
   comments: [
     {
-      Comment: { type: String, required: true },
-      user: { type: String, required: true },
-      posted: { type: String, required: true },
-      upVotes: { type: Number, required: true },
-      downVotes: { type: Number, required: true },
+      Comment: { type: String },
+      user: { type: String },
+      posted: { type: String },
+      upVotes: { type: Number },
+      downVotes: { type: Number },
     },
   ],
 });

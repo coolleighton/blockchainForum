@@ -42,7 +42,7 @@ const Post = ({ data }) => {
                   By {data.author}
                 </p>
               </div>
-              <p className="text-xl bold">This will be the title?</p>
+              <p className="text-xl bold">{data.title}</p>
               <p className="text-lg">{data.text}</p>
               <p className="text-sm mt-3 text-gray-400">Posted {data.posted}</p>
 

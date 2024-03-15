@@ -5,7 +5,7 @@ const PostForm = ({ handleTogglePostForm }) => {
     <div className="border-[1px] border-gray-400 mt-8 p-4 rounded">
       <div>
         <img src={messageIcon} className="h-6 mb-2"></img>
-        <form action="" method="POST">
+        <form action="/messages" method="POST">
           <p className="text-gray-400 text-xs mb-4">
             Write a Post as <span className="text-blue-400">Cooleighton</span>
           </p>
@@ -25,7 +25,7 @@ const PostForm = ({ handleTogglePostForm }) => {
           </label>
           <textarea
             className="block w-full h-20 p-2 border-[1px]"
-            name="extra"
+            name="text"
             placeholder="Have any extra information?"
             type="text"
             required

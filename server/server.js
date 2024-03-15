@@ -7,7 +7,6 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
 const apiRoute = require("./routes/messages");
 const signupRoute = require("./routes/users");
@@ -19,8 +18,6 @@ mongoose.set("strictQuery", false);
 
 const mongoDB =
   "mongodb+srv://coolleighton:Mad10411!@cluster0.bhh2j7j.mongodb.net/blockchainForum?retryWrites=true&w=majority";
-
-//process.env.MongoDbUrl; // hidden in .env file
 
 main().catch((err) => console.log(err));
 async function main() {
