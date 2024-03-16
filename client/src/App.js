@@ -68,6 +68,7 @@ function App() {
           loggedIn={loggedIn}
           handleLogout={handleLogout}
           setNewPostTitle={setNewPostTitle}
+          newPostTitle={newPostTitle}
         />
       ),
     },

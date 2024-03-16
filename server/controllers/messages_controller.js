@@ -47,7 +47,7 @@ exports.question_post = [
         posted: new Date(),
         upVotes: 0,
         downVotes: 0,
-        comments: [{}],
+        comments: [],
       });
 
       // Save the forum post

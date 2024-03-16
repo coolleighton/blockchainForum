@@ -5,11 +5,23 @@ import arrowRight from "../../images/arrowRight.png";
 import Header from "../../components/header.jsx";
 import Post from "../../components/Post.jsx";
 import PostForm from "../../components/PostForm.jsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
+const Main = ({
+  backendData,
+  loggedIn,
+  handleLogout,
+  setNewPostTitle,
+  newPostTitle,
+}) => {
   const [postFormActive, setPostFormActive] = useState(false);
-  const [sortedBy, setSortedBy] = useState("upVotes");
+  const [sortedBy, setSortedBy] = useState("datePosted");
+
+  // when new post submitted sort by most recent
+
+  useEffect(() => {
+    setSortedBy("datePosted");
+  }, [newPostTitle]);
 
   // sort data by either date or upvotes
 
@@ -79,15 +91,6 @@ const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
             <div className="flex place-items-center">
               <p className="bold mr-4">Sort By:</p>
               <button
-                className=" px-3 py-1 rounded duration-200 mr-4"
-                onClick={() => handleSortByUpVotes()}
-                style={{
-                  backgroundColor: sortedBy === "upVotes" ? "#4B5563" : "black",
-                }}
-              >
-                <p className="text-sm text-white regular">Most Popular</p>
-              </button>
-              <button
                 className=" px-3 py-1 rounded  duration-200 mr-4"
                 onClick={() => handleSortByDate()}
                 style={{
@@ -95,6 +98,15 @@ const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
                 }}
               >
                 <p className="text-sm text-white regular">Most Recent</p>
+              </button>
+              <button
+                className=" px-3 py-1 rounded duration-200 mr-4"
+                onClick={() => handleSortByUpVotes()}
+                style={{
+                  backgroundColor: sortedBy === "upVotes" ? "#4B5563" : "black",
+                }}
+              >
+                <p className="text-sm text-white regular">Most Popular</p>
               </button>
             </div>
             <div>

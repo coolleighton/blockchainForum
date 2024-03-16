@@ -56,8 +56,10 @@ const Post = ({ data }) => {
                   {commentsActive ? (
                     <p className="text-sm text-white regular">Hide Comments</p>
                   ) : (
-                    <p className="text-sm text-white regualr">
-                      {commentsLength === 1
+                    <p className="text-sm text-white regular">
+                      {commentsLength === 0
+                        ? "Leave a Comment"
+                        : commentsLength === 1
                         ? "See " + commentsLength + " Comment"
                         : "See " + commentsLength + " Comments"}
                     </p>
