@@ -8,6 +8,7 @@ import Login from "./pages/login/Login.jsx";
 function App() {
   const [backendData, setBackendData] = useState([{}]);
   const [loggedIn, setLoggedIn] = useState();
+  const [newPostTitle, setNewPostTitle] = useState("newPost");
 
   useEffect(() => {
     // Check if the user is logged in by sending a request to the backend
@@ -36,7 +37,7 @@ function App() {
 
         console.log(data);
       });
-  }, []);
+  }, [newPostTitle]);
 
   const handleLogout = () => {
     console.log("clicked");
@@ -66,6 +67,7 @@ function App() {
           backendData={backendData}
           loggedIn={loggedIn}
           handleLogout={handleLogout}
+          setNewPostTitle={setNewPostTitle}
         />
       ),
     },

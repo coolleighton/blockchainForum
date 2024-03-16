@@ -7,8 +7,25 @@ import Post from "../../components/Post.jsx";
 import PostForm from "../../components/PostForm.jsx";
 import { useState } from "react";
 
-const Main = ({ backendData, loggedIn, handleLogout }) => {
+const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
   const [postFormActive, setPostFormActive] = useState(false);
+  const [sortedBy, setSortedBy] = useState("upVotes");
+
+  // sort data by either date or upvotes
+
+  let sortedData = [{}];
+
+  if (backendData) {
+    if (sortedBy === "upVotes") {
+      sortedData = backendData.sort((a, b) => b.upVotes - a.upVotes);
+    } else if (sortedBy === "datePosted") {
+      sortedData = backendData.sort(
+        (b, a) => new Date(a.posted) - new Date(b.posted)
+      );
+    }
+  }
+
+  // handle either open form or toggle open form
 
   const handleTogglePostForm = () => {
     if (postFormActive === false) {
@@ -20,6 +37,16 @@ const Main = ({ backendData, loggedIn, handleLogout }) => {
 
   const handleOpenPostForm = () => {
     setPostFormActive(true);
+  };
+
+  // handle when sort buttons are clicked
+
+  const handleSortByDate = () => {
+    setSortedBy("datePosted");
+  };
+
+  const handleSortByUpVotes = () => {
+    setSortedBy("upVotes");
   };
 
   return (
@@ -39,20 +66,42 @@ const Main = ({ backendData, loggedIn, handleLogout }) => {
       <div className="bg-white pt-12">
         <div className="w-[70vw] mx-auto flex justify-between">
           <div className="w-[70%]">
-            <div className="flex justify-between">
+            <div className="flex justify-between mb-8">
               <h3 className="text-3xl bold pb-2">Browse Forum Messages</h3>
+
               <button
-                className="bg-black px-4 rounded hover:bg-gray-700 duration-200 text-white regular"
+                className=" bg-black px-4 rounded hover:bg-gray-700 duration-200 text-white regular"
                 onClick={() => handleOpenPostForm()}
               >
                 ASK A QUESTION
               </button>
             </div>
-
+            <div className="flex place-items-center">
+              <p className="bold mr-4">Sort By:</p>
+              <button
+                className=" px-3 py-1 rounded duration-200 mr-4"
+                onClick={() => handleSortByUpVotes()}
+                style={{
+                  backgroundColor: sortedBy === "upVotes" ? "#4B5563" : "black",
+                }}
+              >
+                <p className="text-sm text-white regular">Most Popular</p>
+              </button>
+              <button
+                className=" px-3 py-1 rounded  duration-200 mr-4"
+                onClick={() => handleSortByDate()}
+                style={{
+                  backgroundColor: sortedBy === "upVotes" ? "black" : "#4B5563",
+                }}
+              >
+                <p className="text-sm text-white regular">Most Recent</p>
+              </button>
+            </div>
             <div>
               {postFormActive ? (
                 <PostForm
                   handleTogglePostForm={handleTogglePostForm}
+                  setNewPostTitle={setNewPostTitle}
                 ></PostForm>
               ) : (
                 <></>
@@ -62,8 +111,8 @@ const Main = ({ backendData, loggedIn, handleLogout }) => {
             {typeof backendData === "undefined" ? (
               <p>Loading...</p>
             ) : (
-              backendData.map((data) => {
-                return <Post data={data}></Post>;
+              backendData.map((sortedData) => {
+                return <Post data={sortedData}></Post>;
               })
             )}
           </div>

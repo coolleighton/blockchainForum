@@ -22,7 +22,7 @@ const Post = ({ data }) => {
     return (
       <div
         key={data.id}
-        className=" border-[1px] border-gray-400 mt-8 p-4 rounded"
+        className=" border-[1px] border-gray-400 mt-4 p-4 rounded"
       >
         <div className="flex">
           <div className="flex justify-between items-start w-full">
@@ -44,7 +44,9 @@ const Post = ({ data }) => {
               </div>
               <p className="text-xl bold">{data.title}</p>
               <p className="text-lg">{data.text}</p>
-              <p className="text-sm mt-3 text-gray-400">Posted {data.posted}</p>
+              <p className="text-sm mt-3 text-gray-400">
+                Posted {GlobalFunctions.returnConvertedDate(data.posted)}
+              </p>
 
               <div>
                 <button

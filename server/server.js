@@ -37,6 +37,7 @@ app.use(limiter); // Apply rate limiter to all requests
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // routes
 app.use("/messages", apiRoute);

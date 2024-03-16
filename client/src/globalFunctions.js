@@ -2,6 +2,26 @@ const GlobalFunctions = {
   returnFirstLetter: function firstLetterString(inputString) {
     return inputString ? inputString[0] : "";
   },
+
+  returnConvertedDate: function convertDateStringToDate(dateString) {
+    // Create a new Date object from the provided date string
+    let date = new Date(dateString);
+
+    // Extract year, month, and day
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1; // Month is zero-indexed, so adding 1
+    let day = date.getDate();
+
+    // Format month and day to ensure they have leading zeros if necessary
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
+
+    // Construct the formatted date string
+    let formattedDate = day + "/" + month + "/" + year;
+
+    return formattedDate;
+  },
+
   returnRandomColor: function getColor(input) {
     const colors = {
       a: "#F9B5B5",
