@@ -37,8 +37,9 @@ const CommentForm = ({ id, setNewPostTitle }) => {
       console.error("Error creating post:", error.message);
       // Handle network errors or other unexpected errors
     }
-    setNewPostTitle(commentData.text); // tiggers messages API to request new data
+    setNewPostTitle(commentData.comment); // tiggers messages API to request new data
     setCommentData({
+      // clear comments text area
       ...commentData,
       comment: "",
     });
