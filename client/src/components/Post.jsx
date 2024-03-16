@@ -3,8 +3,10 @@ import downArrow from "../images/downArrow.png";
 import "./Post.css";
 import GlobalFunctions from "../globalFunctions";
 import { useState } from "react";
+import Comment from "./Comment";
+import CommentForm from "./CommentForm";
 
-const Post = ({ data }) => {
+const Post = ({ data, setNewPostTitle }) => {
   const [commentsActive, setCommentsActive] = useState(false);
 
   let commentsLength = 0;
@@ -21,7 +23,7 @@ const Post = ({ data }) => {
 
     return (
       <div
-        key={data.id}
+        key={data._id}
         className=" border-[1px] border-gray-400 mt-4 p-4 rounded"
       >
         <div className="flex">
@@ -81,73 +83,15 @@ const Post = ({ data }) => {
         </div>
 
         <div style={{ display: commentsActive ? "block" : "none" }}>
-          <div>
-            {data.comments.map((comment) => {
-              return (
-                <div>
-                  <hr className="my-4"></hr>
-                  <div className="flex justify-between items-start">
-                    <div className="flex items-center">
-                      <div
-                        className="profileCircle mr-2"
-                        style={{
-                          backgroundColor: GlobalFunctions.returnRandomColor(
-                            GlobalFunctions.returnFirstLetter(comment.user)
-                          ),
-                        }}
-                      >
-                        {GlobalFunctions.returnFirstLetter(comment.user)}
-                      </div>
-                      <div>
-                        <div>
-                          <p>{comment.Comment}</p>
-                        </div>
-                        <div className="mt-1 flex">
-                          <p className="text-xs mr-2 text-gray-400">
-                            By {comment.user}
-                          </p>
-                          <p className="text-xs  text-gray-400">
-                            Posted {comment.posted}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+          {data.comments.map((comment) => {
+            return <Comment comment={comment}></Comment>;
+          })}
 
-                    <div className="flex">
-                      <button className="flex mr-2 items-center hover:contrast-150 duration-200">
-                        <img className="h-4" src={upArrow}></img>
-                        <p className="upArrow">{comment.upVotes}</p>
-                      </button>
-                      <button className="flex items-center hover:contrast-150 duration-200">
-                        <img className="h-4" src={downArrow}></img>
-                        <p className="downArrow">{comment.downVotes}</p>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
           <hr className="my-4"></hr>
-          <form action="" method="POST">
-            <p className="text-gray-400 text-xs mb-1">
-              Comment as <span className="text-blue-400">Cooleighton</span>
-            </p>
-            <label className="block text-md medium mb-4" htmlFor="comment">
-              Leave a Comment Here
-            </label>
-
-            <textarea
-              className="block w-full h-20 p-2 border-[1px]"
-              name="comment"
-              placeholder="What are your thoughts?"
-              required
-            ></textarea>
-
-            <button className="bg-black text-white px-4 h-7 mt-4 rounded text-sm hover:bg-gray-700 duration-200">
-              Submit
-            </button>
-          </form>
+          <CommentForm
+            id={data._id}
+            setNewPostTitle={setNewPostTitle}
+          ></CommentForm>
         </div>
       </div>
     );

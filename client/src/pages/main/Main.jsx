@@ -124,7 +124,12 @@ const Main = ({
               <p>Loading...</p>
             ) : (
               backendData.map((sortedData) => {
-                return <Post data={sortedData}></Post>;
+                return (
+                  <Post
+                    data={sortedData}
+                    setNewPostTitle={setNewPostTitle}
+                  ></Post>
+                );
               })
             )}
           </div>

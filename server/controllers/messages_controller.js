@@ -1,4 +1,5 @@
 const Message = require("../models/message");
+const Comment = require("../models/comment");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -54,6 +55,52 @@ exports.question_post = [
       await forumPost.save();
       console.log("Post created successfully");
       // If the post is saved successfully, return a 201 Created status
+      return res.sendStatus(201);
+    } catch (err) {
+      // If there's an error while saving the post, return a 500 Internal Server Error status
+      console.error("Error saving post:", err.message);
+      return res.sendStatus(500);
+    }
+  }),
+];
+
+exports.comment_post = [
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // find message to update
+    const messageById = await Message.findById(req.body.id);
+
+    // Check if there are validation errors
+    if (!errors.isEmpty()) {
+      // If there are validation errors, return a 400 Bad Request status
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      // Create a new comment with escaped and trimmed data.
+
+      const comment = new Comment({
+        Comment: req.body.comment,
+        user: "test",
+        posted: new Date(),
+        upVotes: 0,
+        downVotes: 0,
+      });
+
+      //add comment to to message
+      messageById.comments.push(comment);
+
+      // update the post with comment
+      const updatedPostWithComment = await Message.findByIdAndUpdate(
+        req.body.id,
+        messageById,
+        {}
+      );
+
+      // If the post is saved successfully, return a 201 Created status
+      console.log("comment created successfully", updatedPostWithComment);
       return res.sendStatus(201);
     } catch (err) {
       // If there's an error while saving the post, return a 500 Internal Server Error status
