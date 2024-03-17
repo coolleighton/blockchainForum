@@ -163,7 +163,13 @@ const Post = ({ data, setNewPostTitle }) => {
 
         <div style={{ display: commentsActive ? "block" : "none" }}>
           {data.comments.map((comment) => {
-            return <Comment comment={comment}></Comment>;
+            return (
+              <Comment
+                comment={comment}
+                id={data._id}
+                setNewPostTitle={setNewPostTitle}
+              ></Comment>
+            );
           })}
 
           <hr className="my-4"></hr>

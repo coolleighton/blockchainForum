@@ -5,15 +5,9 @@ import arrowRight from "../../images/arrowRight.png";
 import Header from "../../components/header.jsx";
 import Post from "../../components/post/PostComponent/Post.jsx";
 import PostForm from "../../components/PostForm.jsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const Main = ({
-  backendData,
-  loggedIn,
-  handleLogout,
-  setNewPostTitle,
-  newPostTitle,
-}) => {
+const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
   const [postFormActive, setPostFormActive] = useState(false);
   const [sortedBy, setSortedBy] = useState("datePosted");
 
@@ -55,6 +49,20 @@ const Main = ({
     setSortedBy("upVotes");
   };
 
+  // handle hover effects for buttons that are controlled by inline styles.  can't be done via class names when inline styles are used
+
+  const handleMouseEnter = (e, id) => {
+    if ((id === "notActive") === true) {
+      e.target.style.backgroundColor = "#4B5565";
+    }
+  };
+
+  const handleMouseExit = (e, id) => {
+    if ((id === "notActive") === true) {
+      e.target.style.backgroundColor = "#000000";
+    }
+  };
+
   return (
     <div className="flex-col bg-black">
       <Header loggedIn={loggedIn} handleLogout={handleLogout}></Header>
@@ -90,6 +98,18 @@ const Main = ({
                 style={{
                   backgroundColor: sortedBy === "upVotes" ? "black" : "#4B5563",
                 }}
+                onMouseEnter={(e) =>
+                  handleMouseEnter(
+                    e,
+                    sortedBy === "upVotes" ? "notActive" : "active"
+                  )
+                }
+                onMouseLeave={(e) =>
+                  handleMouseExit(
+                    e,
+                    sortedBy === "upVotes" ? "notActive" : "active"
+                  )
+                }
               >
                 <p className="text-sm text-white regular">Most Recent</p>
               </button>
@@ -99,6 +119,18 @@ const Main = ({
                 style={{
                   backgroundColor: sortedBy === "upVotes" ? "#4B5563" : "black",
                 }}
+                onMouseEnter={(e) =>
+                  handleMouseEnter(
+                    e,
+                    sortedBy === "datePosted" ? "notActive" : "active"
+                  )
+                }
+                onMouseLeave={(e) =>
+                  handleMouseExit(
+                    e,
+                    sortedBy === "datePosted" ? "notActive" : "active"
+                  )
+                }
               >
                 <p className="text-sm text-white regular">Most Popular</p>
               </button>

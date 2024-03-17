@@ -10,6 +10,6 @@ router.post("/comment", messages_controller.comment_post);
 
 router.post("/postUpVote", messages_controller.upVote_post);
 
-router.post("/postDownVote", messages_controller.downVote_post);
+router.post("/commentUpVote", messages_controller.commentUpVote_post);
 
 module.exports = router;

@@ -7,7 +7,6 @@ const commentSchema = new Schema({
   user: { type: String, required: true },
   posted: { type: String, required: true },
   upVotes: { type: Number, required: true },
-  downVotes: { type: Number, required: true },
 });
 
 // Export model

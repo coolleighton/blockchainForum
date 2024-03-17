@@ -7,7 +7,7 @@ exports.api = asyncHandler(async (req, res, next) => {
   try {
     const allMessages = await Message.find(
       {},
-      "author title text posted upVotes downVotes comments"
+      "author title text posted upVotes comments"
     )
       .sort({ author: 1 })
       .exec();
@@ -41,13 +41,11 @@ exports.question_post = [
     try {
       // Create an object with escaped and trimmed data.
       const forumPost = new Message({
-        index: 21,
         author: "test",
         title: req.body.title,
         text: req.body.text,
         posted: new Date(),
         upVotes: 0,
-        downVotes: 0,
         comments: [],
       });
 
@@ -86,7 +84,6 @@ exports.comment_post = [
         user: "test",
         posted: new Date(),
         upVotes: 0,
-        downVotes: 0,
       });
 
       //add comment to to message
@@ -150,15 +147,26 @@ exports.upVote_post = [
   }),
 ];
 
-exports.downVote_post = [
+exports.commentUpVote_post = [
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
-    console.log(req.body);
-
     // find message to update
-    const messageById = await Message.findById(req.body.id);
+    const messageById = await Message.findById(req.body.postId);
+
+    // find comment within message to update
+    const commentById = messageById.comments.find(
+      (obj) => obj.id === req.body.commentId
+    );
+
+    // find the index of that object
+    const commentIndexById = messageById.comments.findIndex(
+      (obj) => obj.id === req.body.commentId
+    );
+
+    // console.log(commentById);
+    // console.group(commentIndexById);
 
     // Check if there are validation errors
     if (!errors.isEmpty()) {
@@ -168,16 +176,21 @@ exports.downVote_post = [
 
     try {
       // add increase upvotes
-      messageById.downVotes = req.body.amount + 1;
+
+      commentById.upVotes = req.body.amount + 1;
+
+      console.log(messageById.comments[commentIndexById]);
 
       console.log(messageById);
 
-      // update the post with comment
+      // update the post with the updated comment
       const updatedPostWithComment = await Message.findByIdAndUpdate(
-        req.body.id,
+        req.body.postId,
         messageById,
         {}
       );
+
+      console.log(updatedPostWithComment);
 
       // If the post is saved successfully, return a 201 Created status
       console.log("up vote added successfully", updatedPostWithComment);
