@@ -1,6 +1,6 @@
-import GlobalFunctions from "../globalFunctions";
-import upArrow from "../images/upArrow.png";
-import downArrow from "../images/downArrow.png";
+import GlobalFunctions from "../../globalFunctions";
+import upArrow from "../../images/upArrow.png";
+import downArrow from "../../images/downArrow.png";
 
 const Comment = ({ comment }) => {
   return (

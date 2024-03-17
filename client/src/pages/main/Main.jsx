@@ -3,7 +3,7 @@ import heroImage from "../../images/heroImage.png";
 import arrowRight from "../../images/arrowRight.png";
 
 import Header from "../../components/header.jsx";
-import Post from "../../components/Post.jsx";
+import Post from "../../components/post/PostComponent/Post.jsx";
 import PostForm from "../../components/PostForm.jsx";
 import { useEffect, useState } from "react";
 
@@ -16,12 +16,6 @@ const Main = ({
 }) => {
   const [postFormActive, setPostFormActive] = useState(false);
   const [sortedBy, setSortedBy] = useState("datePosted");
-
-  // when new post submitted sort by most recent
-
-  useEffect(() => {
-    setSortedBy("datePosted");
-  }, [newPostTitle]);
 
   // sort data by either date or upvotes
 
@@ -114,6 +108,7 @@ const Main = ({
                 <PostForm
                   handleTogglePostForm={handleTogglePostForm}
                   setNewPostTitle={setNewPostTitle}
+                  handleSortByDate={handleSortByDate}
                 ></PostForm>
               ) : (
                 <></>

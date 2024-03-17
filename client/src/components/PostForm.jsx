@@ -1,7 +1,11 @@
 import messageIcon from "../images/messageIcon.png";
 import { useState } from "react";
 
-const PostForm = ({ handleTogglePostForm, setNewPostTitle }) => {
+const PostForm = ({
+  handleTogglePostForm,
+  setNewPostTitle,
+  handleSortByDate,
+}) => {
   const [formData, setFormData] = useState({
     title: "",
     text: "",
@@ -19,6 +23,7 @@ const PostForm = ({ handleTogglePostForm, setNewPostTitle }) => {
     console.log(formData);
 
     setNewPostTitle(formData.title); // tiggers messages API to request new data
+    handleSortByDate();
 
     try {
       const response = await fetch("/messages", {

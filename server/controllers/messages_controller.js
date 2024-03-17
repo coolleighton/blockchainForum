@@ -109,3 +109,83 @@ exports.comment_post = [
     }
   }),
 ];
+
+exports.upVote_post = [
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    console.log(req.body);
+
+    // find message to update
+    const messageById = await Message.findById(req.body.id);
+
+    // Check if there are validation errors
+    if (!errors.isEmpty()) {
+      // If there are validation errors, return a 400 Bad Request status
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      // add increase upvotes
+      messageById.upVotes = req.body.amount + 1;
+
+      console.log(messageById);
+
+      // update the post with comment
+      const updatedPostWithComment = await Message.findByIdAndUpdate(
+        req.body.id,
+        messageById,
+        {}
+      );
+
+      // If the post is saved successfully, return a 201 Created status
+      console.log("up vote added successfully", updatedPostWithComment);
+      return res.sendStatus(201);
+    } catch (err) {
+      // If there's an error while saving the post, return a 500 Internal Server Error status
+      console.error("Error updating upvotes:", err.message);
+      return res.sendStatus(500);
+    }
+  }),
+];
+
+exports.downVote_post = [
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    console.log(req.body);
+
+    // find message to update
+    const messageById = await Message.findById(req.body.id);
+
+    // Check if there are validation errors
+    if (!errors.isEmpty()) {
+      // If there are validation errors, return a 400 Bad Request status
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      // add increase upvotes
+      messageById.downVotes = req.body.amount + 1;
+
+      console.log(messageById);
+
+      // update the post with comment
+      const updatedPostWithComment = await Message.findByIdAndUpdate(
+        req.body.id,
+        messageById,
+        {}
+      );
+
+      // If the post is saved successfully, return a 201 Created status
+      console.log("up vote added successfully", updatedPostWithComment);
+      return res.sendStatus(201);
+    } catch (err) {
+      // If there's an error while saving the post, return a 500 Internal Server Error status
+      console.error("Error updating upvotes:", err.message);
+      return res.sendStatus(500);
+    }
+  }),
+];
