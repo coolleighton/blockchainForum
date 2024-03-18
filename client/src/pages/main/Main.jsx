@@ -7,7 +7,13 @@ import Post from "../../components/post/PostComponent/Post.jsx";
 import PostForm from "../../components/PostForm.jsx";
 import { useState } from "react";
 
-const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
+const Main = ({
+  backendData,
+  loggedIn,
+  handleLogout,
+  setNewPostTitle,
+  profileData,
+}) => {
   const [postFormActive, setPostFormActive] = useState(false);
   const [sortedBy, setSortedBy] = useState("datePosted");
 
@@ -36,7 +42,11 @@ const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
   };
 
   const handleOpenPostForm = () => {
-    setPostFormActive(true);
+    if (loggedIn) {
+      setPostFormActive(true);
+    } else {
+      alert("please log in");
+    }
   };
 
   // handle when sort buttons are clicked
@@ -51,21 +61,13 @@ const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
 
   // handle hover effects for buttons that are controlled by inline styles.  can't be done via class names when inline styles are used
 
-  const handleMouseEnter = (e, id) => {
-    if ((id === "notActive") === true) {
-      e.target.style.backgroundColor = "#4B5565";
-    }
-  };
-
-  const handleMouseExit = (e, id) => {
-    if ((id === "notActive") === true) {
-      e.target.style.backgroundColor = "#000000";
-    }
-  };
-
   return (
     <div className="flex-col bg-black">
-      <Header loggedIn={loggedIn} handleLogout={handleLogout}></Header>
+      <Header
+        loggedIn={loggedIn}
+        handleLogout={handleLogout}
+        profileData={profileData}
+      ></Header>
 
       <div className="h-[50vh] w-[70vw] mx-auto flex items-center justify-between">
         <div className="w-[30rem]">
@@ -84,7 +86,7 @@ const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
               <h3 className="text-3xl bold pb-2">Browse Forum Messages</h3>
 
               <button
-                className=" bg-black px-4 rounded hover:bg-gray-700 duration-200 text-white regular"
+                className=" bg-black px-4 rounded hover:bg-gray-600 duration-200 text-white regular"
                 onClick={() => handleOpenPostForm()}
               >
                 ASK A QUESTION
@@ -98,18 +100,6 @@ const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
                 style={{
                   backgroundColor: sortedBy === "upVotes" ? "black" : "#4B5563",
                 }}
-                onMouseEnter={(e) =>
-                  handleMouseEnter(
-                    e,
-                    sortedBy === "upVotes" ? "notActive" : "active"
-                  )
-                }
-                onMouseLeave={(e) =>
-                  handleMouseExit(
-                    e,
-                    sortedBy === "upVotes" ? "notActive" : "active"
-                  )
-                }
               >
                 <p className="text-sm text-white regular">Most Recent</p>
               </button>
@@ -119,18 +109,6 @@ const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
                 style={{
                   backgroundColor: sortedBy === "upVotes" ? "#4B5563" : "black",
                 }}
-                onMouseEnter={(e) =>
-                  handleMouseEnter(
-                    e,
-                    sortedBy === "datePosted" ? "notActive" : "active"
-                  )
-                }
-                onMouseLeave={(e) =>
-                  handleMouseExit(
-                    e,
-                    sortedBy === "datePosted" ? "notActive" : "active"
-                  )
-                }
               >
                 <p className="text-sm text-white regular">Most Popular</p>
               </button>
@@ -155,6 +133,7 @@ const Main = ({ backendData, loggedIn, handleLogout, setNewPostTitle }) => {
                   <Post
                     data={sortedData}
                     setNewPostTitle={setNewPostTitle}
+                    loggedIn={loggedIn}
                   ></Post>
                 );
               })

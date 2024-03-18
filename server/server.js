@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const bcrypt = require("bcryptjs");
-const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -49,13 +48,13 @@ passport.use(
     try {
       const user = await User.findOne({ username: username });
       if (!user) {
-        console.log(user);
         return done(null, false, { message: "Incorrect username" });
       }
-      if (user.password !== password) {
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+        // passwords do not match!
         return done(null, false, { message: "Incorrect password" });
       }
-      console.log(user);
       return done(null, user);
     } catch (err) {
       return done(err);
@@ -74,6 +73,12 @@ passport.deserializeUser(async (id, done) => {
   } catch (err) {
     done(err);
   }
+});
+
+// save the user for easy access
+app.use((req, res, next) => {
+  userProfileDetails = req.user;
+  next();
 });
 
 app.post(
@@ -95,7 +100,16 @@ app.post("/logout", (req, res, next) => {
 
 app.get("/checkAuth", (req, res) => {
   if (req.isAuthenticated()) {
+    res.json(userProfileDetails);
     res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+app.get("/profile", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json(userProfileDetails);
   } else {
     res.sendStatus(401);
   }

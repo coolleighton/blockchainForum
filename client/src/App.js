@@ -9,6 +9,17 @@ function App() {
   const [backendData, setBackendData] = useState([{}]);
   const [loggedIn, setLoggedIn] = useState();
   const [newPostTitle, setNewPostTitle] = useState("newPost");
+  const [profileData, setProfileData] = useState({});
+
+  // Get user profile data if available
+  useEffect(() => {
+    fetch("/profile")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setProfileData(data.username);
+      });
+  }, [loggedIn]);
 
   useEffect(() => {
     // Check if the user is logged in by sending a request to the backend
@@ -29,12 +40,12 @@ function App() {
       });
   }, []);
 
+  // get forum posts
   useEffect(() => {
     fetch("/messages")
       .then((response) => response.json())
       .then((data) => {
         setBackendData(data);
-
         console.log(data);
       });
   }, [newPostTitle]);
@@ -47,7 +58,6 @@ function App() {
       credentials: "include", // Include credentials (cookies) in the request
     })
       .then((response) => {
-        console.log(response);
         if (response.ok) {
           setLoggedIn(false); // Update loggedIn state
         } else {
@@ -69,16 +79,17 @@ function App() {
           handleLogout={handleLogout}
           setNewPostTitle={setNewPostTitle}
           newPostTitle={newPostTitle}
+          profileData={profileData}
         />
       ),
     },
     {
       path: "sign-up",
-      element: <SignUp />,
+      element: <SignUp profileData={profileData} />,
     },
     {
       path: "login",
-      element: <Login />,
+      element: <Login profileData={profileData} />,
     },
   ]);
 

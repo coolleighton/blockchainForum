@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 
-const Header = ({ loggedIn, handleLogout }) => {
+const Header = ({ loggedIn, handleLogout, profileData }) => {
   const navigate = useNavigate();
+
+  const username = profileData.toString();
 
   const handleLogoutThenNavigate = () => {
     handleLogout();
@@ -24,11 +26,17 @@ const Header = ({ loggedIn, handleLogout }) => {
               FORUM
             </p>
           </button>
+
           <button
             className="bg-white mx-3 px-3 py-3 rounded hover:bg-slate-300 duration-200"
             onClick={() => handleLogoutThenNavigate()}
           >
             <p className="regular text-sm">LOG OUT</p>
+          </button>
+          <button onClick={() => navigate("/")}>
+            <p className="text-white px-2 py-1 regular text-sm hover:underline duration-200">
+              {username}
+            </p>
           </button>
         </div>
       ) : (

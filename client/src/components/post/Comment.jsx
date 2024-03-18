@@ -3,64 +3,68 @@ import upArrow from "../../images/upArrow.png";
 import downArrow from "../../images/downArrow.png";
 import { useState } from "react";
 
-const Comment = ({ comment, id, setNewPostTitle }) => {
+const Comment = ({ comment, id, setNewPostTitle, loggedIn }) => {
   const [commentUpVoted, setCommentUpVoted] = useState(false);
   const [commentDownVoted, setCommentDownVoted] = useState(false);
 
   const handleUpVote = async (direction) => {
-    let amount = 0;
+    if (loggedIn) {
+      let amount = 0;
 
-    if (direction === "up") {
-      amount = comment.upVotes;
-      if (commentDownVoted === true && commentUpVoted === false) {
-        setCommentUpVoted(true);
-        setCommentDownVoted(false);
-        amount = amount + 1;
-      } else if (commentDownVoted === false && commentUpVoted === false) {
-        setCommentUpVoted(true);
-      } else if (commentDownVoted === false && commentUpVoted === true) {
-        setCommentUpVoted(false);
-        amount = amount - 2;
-      }
-    } else {
-      amount = comment.upVotes - 2;
-      if (commentUpVoted === true && commentDownVoted === false) {
-        setCommentDownVoted(true);
-        setCommentUpVoted(false);
-        amount = amount - 1;
-      } else if (commentUpVoted === false && commentDownVoted === false) {
-        setCommentDownVoted(true);
-      } else if (commentUpVoted === false && commentDownVoted === true) {
-        setCommentDownVoted(false);
-        amount = amount + 2;
-      }
-    }
-
-    try {
-      const response = await fetch("/messages/commentUpVote", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: amount,
-          postId: id,
-          commentId: comment._id,
-        }),
-      });
-
-      if (response.ok) {
-        console.log("Post created successfully");
-        // Handle success: maybe display a success message
+      if (direction === "up") {
+        amount = comment.upVotes;
+        if (commentDownVoted === true && commentUpVoted === false) {
+          setCommentUpVoted(true);
+          setCommentDownVoted(false);
+          amount = amount + 1;
+        } else if (commentDownVoted === false && commentUpVoted === false) {
+          setCommentUpVoted(true);
+        } else if (commentDownVoted === false && commentUpVoted === true) {
+          setCommentUpVoted(false);
+          amount = amount - 2;
+        }
       } else {
-        console.error("Error creating post");
-        // Handle error: maybe display an error message
+        amount = comment.upVotes - 2;
+        if (commentUpVoted === true && commentDownVoted === false) {
+          setCommentDownVoted(true);
+          setCommentUpVoted(false);
+          amount = amount - 1;
+        } else if (commentUpVoted === false && commentDownVoted === false) {
+          setCommentDownVoted(true);
+        } else if (commentUpVoted === false && commentDownVoted === true) {
+          setCommentDownVoted(false);
+          amount = amount + 2;
+        }
       }
-    } catch (error) {
-      console.error("Error creating post:", error.message);
-      // Handle network errors or other unexpected errors
+
+      try {
+        const response = await fetch("/messages/commentUpVote", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: amount,
+            postId: id,
+            commentId: comment._id,
+          }),
+        });
+
+        if (response.ok) {
+          console.log("Post created successfully");
+          // Handle success: maybe display a success message
+        } else {
+          console.error("Error creating post");
+          // Handle error: maybe display an error message
+        }
+      } catch (error) {
+        console.error("Error creating post:", error.message);
+        // Handle network errors or other unexpected errors
+      }
+      setNewPostTitle(amount + id); // tiggers messages frontend API to request new data
+    } else {
+      alert("please log in");
     }
-    setNewPostTitle(amount + id); // tiggers messages frontend API to request new data
   };
 
   return (

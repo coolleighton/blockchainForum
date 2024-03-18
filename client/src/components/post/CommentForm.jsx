@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CommentForm = ({ id, setNewPostTitle }) => {
+const CommentForm = ({ id, setNewPostTitle, loggedIn }) => {
   const [commentData, setCommentData] = useState({
     comment: "",
     id: id,
@@ -15,34 +15,39 @@ const CommentForm = ({ id, setNewPostTitle }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(commentData);
 
-    try {
-      const response = await fetch("/messages/comment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(commentData),
-      });
+    if (loggedIn) {
+      console.log(commentData);
 
-      if (response.ok) {
-        console.log("Post created successfully");
-        // Handle success: maybe display a success message
-      } else {
-        console.error("Error creating post");
-        // Handle error: maybe display an error message
+      try {
+        const response = await fetch("/messages/comment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(commentData),
+        });
+
+        if (response.ok) {
+          console.log("Post created successfully");
+          // Handle success: maybe display a success message
+        } else {
+          console.error("Error creating post");
+          // Handle error: maybe display an error message
+        }
+      } catch (error) {
+        console.error("Error creating post:", error.message);
+        // Handle network errors or other unexpected errors
       }
-    } catch (error) {
-      console.error("Error creating post:", error.message);
-      // Handle network errors or other unexpected errors
+      setNewPostTitle(commentData.comment); // tiggers messages API to request new data
+      setCommentData({
+        // clear comments text area
+        ...commentData,
+        comment: "",
+      });
+    } else {
+      alert("please log in");
     }
-    setNewPostTitle(commentData.comment); // tiggers messages API to request new data
-    setCommentData({
-      // clear comments text area
-      ...commentData,
-      comment: "",
-    });
   };
 
   return (

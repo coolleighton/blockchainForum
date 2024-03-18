@@ -1,9 +1,9 @@
 import Header from "../../components/header.jsx";
 
-const Signup = () => {
+const Signup = ({ profileData }) => {
   return (
     <div>
-      <Header></Header>
+      <Header profileData={profileData}></Header>
 
       <div className="mt-16 h-[85vh] w-[100vw] flex items-center justify-center">
         <div className="">
