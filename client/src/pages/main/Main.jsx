@@ -149,6 +149,7 @@ const Main = ({
             <div>
               <h2 className="text-2xl bold pb-2">News</h2>
               <a
+                rel="noreferrer"
                 href="https://www.benjamindada.com/zone-raises-seed-blockchain-fintech-nigerian/"
                 target="_blank"
               >
@@ -161,6 +162,7 @@ const Main = ({
               </a>
               <hr className="border-gray-400 my-2"></hr>
               <a
+                rel="noreferrer"
                 href="https://news.google.com/articles/CBMiY2h0dHBzOi8vcmVzZWFyY2guY2hlY2twb2ludC5jb20vMjAyNC9ldGhlcmV1bXMtY3JlYXRlMi1hLWRvdWJsZS1lZGdlZC1zd29yZC1pbi1ibG9ja2NoYWluLXNlY3VyaXR5L9IBAA?hl=en-GB&gl=GB&ceid=GB%3Aen"
                 target="_blank"
               >
@@ -175,6 +177,7 @@ const Main = ({
               <hr className="border-gray-400 my-2"></hr>
               <a
                 href="https://techxplore.com/news/2024-03-team-blockchain-based-method-personal.html"
+                rel="noreferrer"
                 target="_blank"
               >
                 <button className="flex items-center hover:brightness-0 duration-200 pt-2">
@@ -188,6 +191,7 @@ const Main = ({
               <hr className="border-gray-400 my-2"></hr>
               <a
                 href="https://news.bitcoin.com/wu-tangs-ghostface-killah-to-release-exclusive-music-collection-on-bitcoin-blockchain/"
+                rel="noreferrer"
                 target="_blank"
               >
                 <button className="flex items-center hover:brightness-0 duration-200 pt-2">
