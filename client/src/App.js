@@ -13,7 +13,7 @@ function App() {
 
   // Get user profile data if available
   useEffect(() => {
-    fetch("/profile")
+    fetch("https://blockchainforum.fly.dev//profile")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     // Check if the user is logged in by sending a request to the backend
-    fetch("/checkAuth", {
+    fetch("https://blockchainforum.fly.dev//checkAuth", {
       method: "GET",
       credentials: "include", // Include credentials (cookies) in the request
     })
@@ -42,7 +42,7 @@ function App() {
 
   // get forum posts
   useEffect(() => {
-    fetch("/messages")
+    fetch("https://blockchainforum.fly.dev//messages")
       .then((response) => response.json())
       .then((data) => {
         setBackendData(data);
@@ -53,7 +53,7 @@ function App() {
   const handleLogout = () => {
     console.log("clicked");
     // Send a request to the backend to logout the user
-    fetch("/logout", {
+    fetch("https://blockchainforum.fly.dev//logout", {
       method: "POST",
       credentials: "include", // Include credentials (cookies) in the request
     })
