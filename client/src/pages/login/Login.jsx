@@ -37,7 +37,12 @@ const Login = ({ profileData }) => {
               />
             </div>
             <hr className="mb-8"></hr>
-            <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200">
+            <button
+              className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200"
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
               Login
             </button>
           </form>
