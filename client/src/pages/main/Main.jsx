@@ -5,6 +5,7 @@ import arrowRight from "../../images/arrowRight.png";
 import Header from "../../components/header.jsx";
 import Post from "../../components/post/PostComponent/Post.jsx";
 import PostForm from "../../components/PostForm.jsx";
+import LoginMessage from "../../components/LoginMessage.jsx";
 import { useState } from "react";
 
 const Main = ({
@@ -16,6 +17,8 @@ const Main = ({
 }) => {
   const [postFormActive, setPostFormActive] = useState(false);
   const [sortedBy, setSortedBy] = useState("datePosted");
+  const [loginMessage, setLoginMessage] = useState("up vote a post");
+  const [LoginMessageActive, setLoginMessageActive] = useState(false);
 
   // sort data by either date or upvotes
 
@@ -45,7 +48,8 @@ const Main = ({
     if (loggedIn) {
       setPostFormActive(true);
     } else {
-      alert("please log in");
+      setLoginMessage("ask a question");
+      setLoginMessageActive(true);
     }
   };
 
@@ -62,7 +66,7 @@ const Main = ({
   // handle hover effects for buttons that are controlled by inline styles.  can't be done via class names when inline styles are used
 
   return (
-    <div className="flex-col bg-black">
+    <div className="flex-col bg-black relative">
       <Header
         loggedIn={loggedIn}
         handleLogout={handleLogout}
@@ -73,7 +77,7 @@ const Main = ({
         <div className="w-[30rem]">
           <h1 className="text-white text-7xl bold">Find Solutions</h1>
           <h2 className="mt-2 text-3xl text-slate-300">
-            The #1 Cryptocurreny Forum on the Blockchain
+            The #1 Cryptocurrency Forum on the Blockchain
           </h2>
         </div>
 
@@ -134,54 +138,62 @@ const Main = ({
                     data={sortedData}
                     setNewPostTitle={setNewPostTitle}
                     loggedIn={loggedIn}
+                    setLoginMessage={setLoginMessage}
+                    setLoginMessageActive={setLoginMessageActive}
                   ></Post>
                 );
               })
             )}
           </div>
-          <div className="bg-gray-200 h-fit w-[25%] py-6 flex flex-col justify-center items-center rounded">
+          <div className="bg-gray-200 h-fit w-[25%] p-6 flex flex-col justify-center items-center rounded">
             <div>
               <h2 className="text-2xl bold pb-2">News</h2>
               <a
-                href="https://pros.squarespace.com/blog/2024-web-design-trends"
+                href="https://www.benjamindada.com/zone-raises-seed-blockchain-fintech-nigerian/"
                 target="_blank"
               >
                 <button className="flex items-center hover:brightness-0 duration-200 pt-2">
-                  <p className="regular text-gray-600">
-                    Whats new at the blochain in 2024
+                  <p className="regular text-gray-600 text-sm text-left">
+                    Nigerian blockchain fintech startup Zone raises $8.5M Seed
                   </p>
                   <img src={arrowRight} className="h-6 pl-1"></img>
                 </button>
               </a>
+              <hr className="border-gray-400 my-2"></hr>
               <a
-                href="https://pros.squarespace.com/blog/2024-web-design-trends"
+                href="https://news.google.com/articles/CBMiY2h0dHBzOi8vcmVzZWFyY2guY2hlY2twb2ludC5jb20vMjAyNC9ldGhlcmV1bXMtY3JlYXRlMi1hLWRvdWJsZS1lZGdlZC1zd29yZC1pbi1ibG9ja2NoYWluLXNlY3VyaXR5L9IBAA?hl=en-GB&gl=GB&ceid=GB%3Aen"
                 target="_blank"
               >
                 <button className="flex items-center hover:brightness-0 duration-200 pt-2">
-                  <p className="regular text-gray-600">
-                    Whats new at the blochain in 2024
+                  <p className="regular text-gray-600 text-sm text-left">
+                    Ethereums create2 a double edged sword in blockchain
+                    security
                   </p>
                   <img src={arrowRight} className="h-6 pl-1"></img>
                 </button>
               </a>
+              <hr className="border-gray-400 my-2"></hr>
               <a
-                href="https://pros.squarespace.com/blog/2024-web-design-trends"
+                href="https://techxplore.com/news/2024-03-team-blockchain-based-method-personal.html"
                 target="_blank"
               >
                 <button className="flex items-center hover:brightness-0 duration-200 pt-2">
-                  <p className="regular text-gray-600">
-                    Whats new at the blochain in 2024
+                  <p className="regular text-gray-600 text-sm text-left">
+                    Team develops blockchain-based method to protect personal
+                    data on the internet
                   </p>
                   <img src={arrowRight} className="h-6 pl-1"></img>
                 </button>
               </a>
+              <hr className="border-gray-400 my-2"></hr>
               <a
-                href="https://pros.squarespace.com/blog/2024-web-design-trends"
+                href="https://news.bitcoin.com/wu-tangs-ghostface-killah-to-release-exclusive-music-collection-on-bitcoin-blockchain/"
                 target="_blank"
               >
                 <button className="flex items-center hover:brightness-0 duration-200 pt-2">
-                  <p className="regular text-gray-600">
-                    Whats new at the blochain in 2024
+                  <p className="regular text-gray-600 text-sm text-left">
+                    Wu-Tang's Ghostface Killah to Release Music Collection on
+                    Bitcoin Blockchain
                   </p>
                   <img src={arrowRight} className="h-6 pl-1"></img>
                 </button>
@@ -190,6 +202,14 @@ const Main = ({
           </div>
         </div>
       </div>
+      {LoginMessageActive ? (
+        <LoginMessage
+          loginMessage={loginMessage}
+          setLoginMessageActive={setLoginMessageActive}
+        ></LoginMessage>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

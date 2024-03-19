@@ -12,7 +12,7 @@ const Header = ({ loggedIn, handleLogout, profileData }) => {
   };
 
   return (
-    <div className="bg-black py-3 pl-10 pr-5 flex justify-between items-center fixed w-full top-0">
+    <div className="bg-black py-3 pl-10 pr-5 flex justify-between items-center fixed w-full top-0 z-10">
       <button className="flex items-center" onClick={() => navigate("/")}>
         <img src={logo} className="h-8" alt="logo"></img>
         <h3 className="text-white text-xl pl-2 bold">BLOCKCHAIN</h3>

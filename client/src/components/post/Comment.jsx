@@ -3,7 +3,14 @@ import upArrow from "../../images/upArrow.png";
 import downArrow from "../../images/downArrow.png";
 import { useState } from "react";
 
-const Comment = ({ comment, id, setNewPostTitle, loggedIn }) => {
+const Comment = ({
+  comment,
+  id,
+  setNewPostTitle,
+  loggedIn,
+  setLoginMessage,
+  setLoginMessageActive,
+}) => {
   const [commentUpVoted, setCommentUpVoted] = useState(false);
   const [commentDownVoted, setCommentDownVoted] = useState(false);
 
@@ -63,7 +70,8 @@ const Comment = ({ comment, id, setNewPostTitle, loggedIn }) => {
       }
       setNewPostTitle(amount + id); // tiggers messages frontend API to request new data
     } else {
-      alert("please log in");
+      setLoginMessage("ask a question");
+      setLoginMessageActive(true);
     }
   };
 

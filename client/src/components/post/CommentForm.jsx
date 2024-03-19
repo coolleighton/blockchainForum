@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-const CommentForm = ({ id, setNewPostTitle, loggedIn }) => {
+const CommentForm = ({
+  id,
+  setNewPostTitle,
+  loggedIn,
+  setLoginMessage,
+  setLoginMessageActive,
+}) => {
   const [commentData, setCommentData] = useState({
     comment: "",
     id: id,
@@ -46,7 +52,8 @@ const CommentForm = ({ id, setNewPostTitle, loggedIn }) => {
         comment: "",
       });
     } else {
-      alert("please log in");
+      setLoginMessage("ask a question");
+      setLoginMessageActive(true);
     }
   };
 

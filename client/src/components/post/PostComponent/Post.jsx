@@ -6,7 +6,13 @@ import { useState } from "react";
 import Comment from "../Comment";
 import CommentForm from "../CommentForm";
 
-const Post = ({ data, setNewPostTitle, loggedIn }) => {
+const Post = ({
+  data,
+  setNewPostTitle,
+  loggedIn,
+  setLoginMessage,
+  setLoginMessageActive,
+}) => {
   const [commentsActive, setCommentsActive] = useState(false);
   const [commentUpVoted, setCommentUpVoted] = useState(false);
   const [commentDownVoted, setCommentDownVoted] = useState(false);
@@ -75,7 +81,8 @@ const Post = ({ data, setNewPostTitle, loggedIn }) => {
         }
         setNewPostTitle(amount + id); // tiggers messages frontend API to request new data
       } else {
-        alert("please log in");
+        setLoginMessage("ask a question");
+        setLoginMessageActive(true);
       }
     };
 
@@ -173,6 +180,8 @@ const Post = ({ data, setNewPostTitle, loggedIn }) => {
                 id={data._id}
                 setNewPostTitle={setNewPostTitle}
                 loggedIn={loggedIn}
+                setLoginMessage={setLoginMessage}
+                setLoginMessageActive={setLoginMessageActive}
               ></Comment>
             );
           })}
@@ -182,6 +191,8 @@ const Post = ({ data, setNewPostTitle, loggedIn }) => {
             id={data._id}
             setNewPostTitle={setNewPostTitle}
             loggedIn={loggedIn}
+            setLoginMessage={setLoginMessage}
+            setLoginMessageActive={setLoginMessageActive}
           ></CommentForm>
         </div>
       </div>
