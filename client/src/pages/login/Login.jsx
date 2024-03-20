@@ -1,16 +1,55 @@
 import Header from "../../components/header.jsx";
+import { useEffect, useState } from "react";
+import { redirect, useNavigate } from "react-router-dom";
 
-const Login = ({ profileData }) => {
+const Login = ({ profileData, Url, loggedIn }) => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(Url + "/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log("login success");
+        navigate("/");
+        window.location.reload();
+      } else {
+        console.error("Error logging in");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error.message);
+    }
+  };
+
   return (
     <div>
-      <Header profileData={profileData}></Header>
+      <Header profileData={profileData} loggedIn={loggedIn}></Header>
 
       <div className="mt-16 h-[85vh] w-[100vw] flex items-center justify-center">
         <div>
           <h1 className="text-center bold text-2xl mb-8">
             Log in to Blockchain Forum
           </h1>
-          <form className="w-[25rem]" action="/login" method="POST">
+          <form className="w-[25rem]" onSubmit={handleSubmit}>
             <div className="flex-col">
               <label className="block text-xs pb-2" htmlFor="username">
                 Username*
@@ -20,6 +59,8 @@ const Login = ({ profileData }) => {
                 name="username"
                 placeholder="example123"
                 type="username"
+                value={formData.username}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -33,16 +74,13 @@ const Login = ({ profileData }) => {
                 name="password"
                 placeholder="Password"
                 type="password"
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
             </div>
             <hr className="mb-8"></hr>
-            <button
-              className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200"
-              onSubmit={(e) => {
-                e.preventDefault();
-              }}
-            >
+            <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200">
               Login
             </button>
           </form>

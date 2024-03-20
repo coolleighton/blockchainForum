@@ -48,6 +48,7 @@ app.use(function (req, res, next) {
     "X-Requested-With,content-type"
   );
   res.setHeader("Access-Control-Allow-Credentials", true);
+
   next();
 });
 
@@ -86,6 +87,11 @@ passport.deserializeUser(async (id, done) => {
   } catch (err) {
     done(err);
   }
+});
+
+// Error handling middleware
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500).json({ error: err.message });
 });
 
 // save the user for easy access

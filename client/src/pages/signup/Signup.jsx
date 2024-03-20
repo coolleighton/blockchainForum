@@ -1,6 +1,46 @@
 import Header from "../../components/header.jsx";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Signup = ({ profileData }) => {
+const Signup = ({ profileData, Url }) => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(Url + "/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log("signUp success");
+        navigate("/login");
+        window.location.reload();
+      } else {
+        console.error("Error signing up");
+      }
+    } catch (error) {
+      console.error("Error signing up:", error.message);
+    }
+  };
+
   return (
     <div>
       <Header profileData={profileData}></Header>
@@ -10,7 +50,12 @@ const Signup = ({ profileData }) => {
           <h1 className="text-center bold text-2xl mb-8">
             Sign Up to the Blockchain Forum
           </h1>
-          <form className="w-[25rem]" action="/sign-up" method="POST">
+          <form
+            className="w-[25rem]"
+            action="/sign-up"
+            method="POST"
+            onSubmit={handleSubmit}
+          >
             <div className="flex-col">
               <label className="block text-xs pb-2" htmlFor="username">
                 Username*
@@ -20,6 +65,8 @@ const Signup = ({ profileData }) => {
                 name="username"
                 placeholder="example123"
                 type="username"
+                value={formData.username}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -33,6 +80,8 @@ const Signup = ({ profileData }) => {
                 name="email"
                 placeholder="example@email.com"
                 type="email"
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -46,6 +95,8 @@ const Signup = ({ profileData }) => {
                 name="password"
                 placeholder="Password"
                 type="password"
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
             </div>

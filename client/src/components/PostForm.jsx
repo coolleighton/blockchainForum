@@ -5,6 +5,7 @@ const PostForm = ({
   handleTogglePostForm,
   setNewPostTitle,
   handleSortByDate,
+  Url,
 }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -26,7 +27,7 @@ const PostForm = ({
     handleSortByDate();
 
     try {
-      const response = await fetch("/messages", {
+      const response = await fetch(Url + "/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

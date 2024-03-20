@@ -6,6 +6,7 @@ const CommentForm = ({
   loggedIn,
   setLoginMessage,
   setLoginMessageActive,
+  Url,
 }) => {
   const [commentData, setCommentData] = useState({
     comment: "",
@@ -26,7 +27,7 @@ const CommentForm = ({
       console.log(commentData);
 
       try {
-        const response = await fetch("/messages/comment", {
+        const response = await fetch(Url + "/messages/comment", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

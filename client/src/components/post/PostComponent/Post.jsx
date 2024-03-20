@@ -12,6 +12,7 @@ const Post = ({
   loggedIn,
   setLoginMessage,
   setLoginMessageActive,
+  Url,
 }) => {
   const [commentsActive, setCommentsActive] = useState(false);
   const [commentUpVoted, setCommentUpVoted] = useState(false);
@@ -60,7 +61,7 @@ const Post = ({
         }
 
         try {
-          const response = await fetch("/messages/postUpVote", {
+          const response = await fetch(Url + "/messages/postUpVote", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -182,6 +183,7 @@ const Post = ({
                 loggedIn={loggedIn}
                 setLoginMessage={setLoginMessage}
                 setLoginMessageActive={setLoginMessageActive}
+                Url={Url}
               ></Comment>
             );
           })}
@@ -193,6 +195,7 @@ const Post = ({
             loggedIn={loggedIn}
             setLoginMessage={setLoginMessage}
             setLoginMessageActive={setLoginMessageActive}
+            Url={Url}
           ></CommentForm>
         </div>
       </div>

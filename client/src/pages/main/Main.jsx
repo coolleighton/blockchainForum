@@ -14,6 +14,7 @@ const Main = ({
   handleLogout,
   setNewPostTitle,
   profileData,
+  Url,
 }) => {
   const [postFormActive, setPostFormActive] = useState(false);
   const [sortedBy, setSortedBy] = useState("datePosted");
@@ -123,6 +124,7 @@ const Main = ({
                   handleTogglePostForm={handleTogglePostForm}
                   setNewPostTitle={setNewPostTitle}
                   handleSortByDate={handleSortByDate}
+                  Url={Url}
                 ></PostForm>
               ) : (
                 <></>
@@ -140,6 +142,7 @@ const Main = ({
                     loggedIn={loggedIn}
                     setLoginMessage={setLoginMessage}
                     setLoginMessageActive={setLoginMessageActive}
+                    Url={Url}
                   ></Post>
                 );
               })

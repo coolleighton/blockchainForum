@@ -10,6 +10,7 @@ const Comment = ({
   loggedIn,
   setLoginMessage,
   setLoginMessageActive,
+  Url,
 }) => {
   const [commentUpVoted, setCommentUpVoted] = useState(false);
   const [commentDownVoted, setCommentDownVoted] = useState(false);
@@ -45,7 +46,7 @@ const Comment = ({
       }
 
       try {
-        const response = await fetch("/messages/commentUpVote", {
+        const response = await fetch(Url + "/messages/commentUpVote", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
