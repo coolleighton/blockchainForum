@@ -22,6 +22,8 @@ const Login = ({ profileData, Url, loggedIn }) => {
     try {
       const response = await fetch(Url + "/login", {
         method: "POST",
+        credentials: "include",
+        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
