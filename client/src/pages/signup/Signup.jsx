@@ -21,7 +21,7 @@ const Signup = ({ profileData, Url }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(Url + "/sign-up", {
+      const response = await fetch(Url + "/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

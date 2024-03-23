@@ -20,10 +20,9 @@ const Login = ({ profileData, Url, loggedIn }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(Url + "/login", {
+      const response = await fetch(Url + "/auth/login", {
         method: "POST",
         credentials: "include",
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
@@ -31,7 +30,12 @@ const Login = ({ profileData, Url, loggedIn }) => {
       });
 
       if (response.ok) {
-        console.log("login success");
+        const data = await response.json();
+        console.log(data);
+        const token = data.token;
+
+        // Save token to local storage
+        localStorage.setItem("token", token);
         navigate("/");
         window.location.reload();
       } else {

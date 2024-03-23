@@ -11,8 +11,8 @@ function App() {
   const [newPostTitle, setNewPostTitle] = useState("newPost");
   const [profileData, setProfileData] = useState({});
 
-  //const Url = "";
-  const Url = "https://blockchainforum.fly.dev";
+  const Url = "";
+  //const Url = "https://blockchainforum.fly.dev";
 
   // get forum posts
   useEffect(() => {
@@ -26,7 +26,7 @@ function App() {
 
   // Check if the user is logged in by sending a request to the backend
   useEffect(() => {
-    fetch(Url + "/checkAuth", {
+    fetch(Url + "/auth/checkAuth", {
       method: "GET",
       credentials: "include", // Include credentials (cookies) in the request
     })
@@ -45,7 +45,7 @@ function App() {
 
   // Get user profile data if available
   useEffect(() => {
-    fetch(Url + "/profile")
+    fetch(Url + "/auth/profile")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -57,7 +57,7 @@ function App() {
   // Send a request to the backend to logout the user
   const handleLogout = () => {
     console.log("clicked");
-    fetch(Url + "/logout", {
+    fetch(Url + "/auth/logout", {
       method: "POST",
       credentials: "include", // Include credentials (cookies) in the request
     })
