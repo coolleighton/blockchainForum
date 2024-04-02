@@ -26,33 +26,33 @@ function App() {
 
   // Check if the user is logged in by sending a request to the backend
   useEffect(() => {
-    fetch(Url + "/auth/checkAuth", {
-      method: "GET",
-      credentials: "include", // Include credentials (cookies) in the request
-    })
-      .then((response) => {
-        if (response.ok) {
-          setLoggedIn(true);
-        } else {
-          setLoggedIn(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error checking authentication:", error);
-        setLoggedIn(false);
-      });
-  }, []);
+    const CheckAuth = async () => {
+      const token = localStorage.getItem("token");
 
-  // Get user profile data if available
-  useEffect(() => {
-    fetch(Url + "/auth/profile")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        console.log("logged in");
-        setProfileData(data.username);
-      });
-  }, [loggedIn]);
+      try {
+        const response = await fetch(Url + "/auth/checkAuth", {
+          method: "POST",
+          headers: {
+            authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          console.log(data.authData.user.username);
+          setLoggedIn(true);
+          setProfileData(data.authData.user.username);
+        } else {
+          console.error("Error checking auth");
+        }
+      } catch (error) {
+        console.error("Error checking auth:", error.message);
+      }
+    };
+
+    CheckAuth();
+  }, []);
 
   // Send a request to the backend to logout the user
   const handleLogout = () => {

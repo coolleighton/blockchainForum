@@ -1,5 +1,3 @@
-const mongoDB =
-  "mongodb+srv://coolleighton:Mad10411!@cluster0.bhh2j7j.mongodb.net/blockchainForum?retryWrites=true&w=majority";
 const User = require("../models/user");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
@@ -71,22 +69,23 @@ exports.login_post = async (req, res, next) => {
   }
 };
 
-exports.checkAuth_get = async (req, res, next) => {
-  console.log(req);
-  /* verifyToken,
+exports.checkAuth_get = () => {
+  verifyToken,
     (req, res) => {
-      console.log(req.token);
-      jwt.verify(req.token, "secretKey", (err, authData) => {
+      jwt.verify(req.token, "secretkey", (err, authData) => {
         if (err) {
           res.sendStatus(403);
         } else {
           res.json({
+            message: "Post created...",
             authData,
           });
         }
       });
-    };*/
+    };
 };
+
+// need to send token from local storage
 
 exports.logout_post = asyncHandler(async (req, res, next) => {
   req.logout((err) => {
