@@ -25,7 +25,7 @@ async function main() {
 app.use(function (req, res, next) {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://blockchainforum.netlify.app"
+    "https://main--blockchainforum.netlify.app"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
