@@ -9,10 +9,10 @@ function App() {
   const [backendData, setBackendData] = useState([{}]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [newPostTitle, setNewPostTitle] = useState("newPost");
-  const [profileData, setProfileData] = useState({});
+  const [profileData, setProfileData] = useState("");
 
-  //const Url = "";
-  const Url = "https://blockchainforum.fly.dev";
+  const Url = "";
+  //const Url = "https://blockchainforum.fly.dev";
 
   // get forum posts
   useEffect(() => {

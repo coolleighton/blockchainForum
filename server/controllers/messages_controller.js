@@ -41,7 +41,7 @@ exports.question_post = [
     try {
       // Create an object with escaped and trimmed data.
       const forumPost = new Message({
-        author: "test",
+        author: req.body.author,
         title: req.body.title,
         text: req.body.text,
         posted: new Date(),
@@ -81,7 +81,7 @@ exports.comment_post = [
 
       const comment = new Comment({
         Comment: req.body.comment,
-        user: "test",
+        user: req.body.user,
         posted: new Date(),
         upVotes: 0,
       });

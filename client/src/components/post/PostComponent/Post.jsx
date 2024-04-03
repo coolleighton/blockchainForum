@@ -13,6 +13,7 @@ const Post = ({
   setLoginMessage,
   setLoginMessageActive,
   Url,
+  profileData,
 }) => {
   const [commentsActive, setCommentsActive] = useState(false);
   const [commentUpVoted, setCommentUpVoted] = useState(false);
@@ -196,6 +197,7 @@ const Post = ({
             setLoginMessage={setLoginMessage}
             setLoginMessageActive={setLoginMessageActive}
             Url={Url}
+            profileData={profileData}
           ></CommentForm>
         </div>
       </div>

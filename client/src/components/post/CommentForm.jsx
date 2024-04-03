@@ -7,9 +7,11 @@ const CommentForm = ({
   setLoginMessage,
   setLoginMessageActive,
   Url,
+  profileData,
 }) => {
   const [commentData, setCommentData] = useState({
     comment: "",
+    user: profileData,
     id: id,
   });
 
@@ -60,9 +62,14 @@ const CommentForm = ({
 
   return (
     <form action="/messages/comment" method="POST" onSubmit={handleSubmit}>
-      <p className="text-gray-400 text-xs mb-1">
-        Comment as <span className="text-blue-400">Cooleighton</span>
-      </p>
+      {loggedIn ? (
+        <p className="text-gray-400 text-xs mb-1">
+          Comment as <span className="text-blue-400">{profileData}</span>
+        </p>
+      ) : (
+        ""
+      )}
+
       <label className="block text-md medium mb-4" htmlFor="comment">
         Leave a Comment Here
       </label>

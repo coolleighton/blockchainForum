@@ -6,10 +6,12 @@ const PostForm = ({
   setNewPostTitle,
   handleSortByDate,
   Url,
+  profileData,
 }) => {
   const [formData, setFormData] = useState({
     title: "",
     text: "",
+    author: profileData,
   });
 
   const handleChange = (e) => {
@@ -55,7 +57,7 @@ const PostForm = ({
         <img src={messageIcon} className="h-6 mb-2"></img>
         <form onSubmit={handleSubmit}>
           <p className="text-gray-400 text-xs mb-4">
-            Write a Post as <span className="text-blue-400">Cooleighton</span>
+            Write a Post as <span className="text-blue-400">{profileData}</span>
           </p>
           <label className="block text-md mb-2" htmlFor="title">
             Post Title

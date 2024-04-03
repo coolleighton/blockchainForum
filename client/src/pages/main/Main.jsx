@@ -125,6 +125,7 @@ const Main = ({
                   setNewPostTitle={setNewPostTitle}
                   handleSortByDate={handleSortByDate}
                   Url={Url}
+                  profileData={profileData}
                 ></PostForm>
               ) : (
                 <></>
@@ -143,6 +144,7 @@ const Main = ({
                     setLoginMessage={setLoginMessage}
                     setLoginMessageActive={setLoginMessageActive}
                     Url={Url}
+                    profileData={profileData}
                   ></Post>
                 );
               })
