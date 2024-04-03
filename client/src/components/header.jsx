@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import logo from "../images/logo.png";
 
 const Header = ({ loggedIn, handleLogout, profileData }) => {

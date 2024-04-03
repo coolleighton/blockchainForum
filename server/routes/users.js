@@ -2,16 +2,28 @@ const express = require("express");
 const router = express.Router();
 var jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 
-const users_controller = require("../controllers/users_controller");
-
-router.post("/", users_controller.users_post);
-
-router.post("/logout", users_controller.logout_post);
-
-router.post("/profile", users_controller.profile_get);
+router.post("/", async (req, res, next) => {
+  console.log(req.body);
+  bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+    if (err) {
+      console.log("unable to hash");
+    }
+    try {
+      const user = new User({
+        email: req.body.email,
+        username: req.body.username,
+        password: hashedPassword,
+      });
+      const result = await user.save();
+      res.sendStatus(201);
+    } catch (err) {
+      res.sendStatus(500);
+      return next(err);
+    }
+  });
+});
 
 router.post("/login", async (req, res, next) => {
   console.log("tried loggin in");
@@ -25,7 +37,7 @@ router.post("/login", async (req, res, next) => {
       return res.status(404).json({ error: "Incorrect password" });
     }
 
-    jwt.sign({ user: user }, "secretkey", (err, token) => {
+    jwt.sign({ user: user }, "secretkey", { expiresIn: "5m" }, (err, token) => {
       res.json({
         token: token,
       });

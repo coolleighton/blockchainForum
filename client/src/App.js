@@ -11,8 +11,8 @@ function App() {
   const [newPostTitle, setNewPostTitle] = useState("newPost");
   const [profileData, setProfileData] = useState({});
 
-  const Url = "";
-  //const Url = "https://blockchainforum.fly.dev";
+  //const Url = "";
+  const Url = "https://blockchainforum.fly.dev";
 
   // get forum posts
   useEffect(() => {
@@ -39,8 +39,6 @@ function App() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
-          console.log(data.authData.user.username);
           setLoggedIn(true);
           setProfileData(data.authData.user.username);
         } else {
@@ -57,20 +55,8 @@ function App() {
   // Send a request to the backend to logout the user
   const handleLogout = () => {
     console.log("clicked");
-    fetch(Url + "/auth/logout", {
-      method: "POST",
-      credentials: "include", // Include credentials (cookies) in the request
-    })
-      .then((response) => {
-        if (response.ok) {
-          setLoggedIn(false); // Update loggedIn state
-        } else {
-          console.error("Failed to logout");
-        }
-      })
-      .catch((error) => {
-        console.error("Error logging out:", error);
-      });
+    localStorage.clear();
+    setLoggedIn(false);
   };
 
   const router = createBrowserRouter([
