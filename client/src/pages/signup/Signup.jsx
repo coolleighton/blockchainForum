@@ -32,7 +32,6 @@ const Signup = ({ profileData, Url }) => {
       if (response.ok) {
         console.log("signUp success");
         navigate("/login");
-        window.location.reload();
       } else {
         console.error("Error signing up");
       }
