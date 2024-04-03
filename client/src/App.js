@@ -75,11 +75,11 @@ function App() {
       ),
     },
     {
-      path: "sign-up",
+      path: "/sign-up",
       element: <SignUp profileData={profileData} Url={Url} />,
     },
     {
-      path: "login",
+      path: "/login",
       element: <Login profileData={profileData} Url={Url} />,
     },
   ]);
