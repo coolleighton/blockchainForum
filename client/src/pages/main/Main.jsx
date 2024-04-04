@@ -74,24 +74,28 @@ const Main = ({
         profileData={profileData}
       ></Header>
 
-      <div className="h-[50vh] w-[70vw] mx-auto flex items-center justify-between">
+      <div className="h-[25vh] mt-8 sm:h-[50vh] w-[70vw] mx-auto flex items-center justify-between">
         <div className="w-[30rem]">
-          <h1 className="text-white text-7xl bold">Find Solutions</h1>
-          <h2 className="mt-2 text-3xl text-slate-300">
+          <h1 className="text-2xl text-white sm:text-7xl bold">
+            Find Solutions
+          </h1>
+          <h2 className="text-md mt-2 sm:text-3xl text-slate-300">
             The #1 Cryptocurrency Forum on the Blockchain
           </h2>
         </div>
 
-        <img className="h-full pt-16" src={heroImage}></img>
+        <img className="hidden sm:block h-full pt-16" src={heroImage}></img>
       </div>
-      <div className="bg-white pt-12">
-        <div className="w-[70vw] mx-auto flex justify-between">
-          <div className="w-[70%]">
+      <div className="bg-white sm:pt-12 pt-4">
+        <div className="sm:w-[70vw] mx-auto flex-col sm:flex-row justify-between">
+          <div className="mx-2 sm:mx-0 sm:w-[70%]">
             <div className="flex justify-between mb-8">
-              <h3 className="text-3xl bold pb-2">Browse Forum Messages</h3>
+              <h3 className="text-xl sm:text-3xl bold pb-2">
+                Browse Forum Messages
+              </h3>
 
               <button
-                className=" bg-black px-4 rounded hover:bg-gray-600 duration-200 text-white regular"
+                className="text-xs sm:text-md bg-black px-4 rounded hover:bg-gray-600 duration-200 text-white regular"
                 onClick={() => handleOpenPostForm()}
               >
                 ASK A QUESTION
