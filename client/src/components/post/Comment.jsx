@@ -95,7 +95,7 @@ const Comment = ({
             <div>
               <p>{comment.Comment}</p>
             </div>
-            <div className="mt-1 flex">
+            <div className="mt-1 flex flex-col sm:flex-row">
               <p className="text-xs mr-2 text-gray-400">By {comment.user}</p>
               <p className="text-xs  text-gray-400">
                 Posted {GlobalFunctions.returnConvertedDate(comment.posted)}

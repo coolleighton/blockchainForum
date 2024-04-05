@@ -95,21 +95,59 @@ const Post = ({
       >
         <div className="flex">
           <div className="flex justify-between items-start w-full">
-            <div>
-              <div className="flex items-center mb-4">
-                <div
-                  className="OPprofileCircle mr-2"
-                  style={{
-                    backgroundColor: GlobalFunctions.returnRandomColor(
-                      GlobalFunctions.returnFirstLetter(data.author)
-                    ),
-                  }}
-                >
-                  {GlobalFunctions.returnFirstLetter(data.author)}
+            <div className="w-full">
+              <div className="flex justify-between mb-4">
+                <div className="flex items-center">
+                  <div
+                    className="OPprofileCircle mr-2"
+                    style={{
+                      backgroundColor: GlobalFunctions.returnRandomColor(
+                        GlobalFunctions.returnFirstLetter(data.author)
+                      ),
+                    }}
+                  >
+                    {GlobalFunctions.returnFirstLetter(data.author)}
+                  </div>
+                  <p className="text-sm text-gray-400 sm:text-center">
+                    By {data.author}
+                  </p>
                 </div>
-                <p className="text-sm text-gray-400 text-center">
-                  By {data.author}
-                </p>
+
+                <div className="flex items-center">
+                  <button
+                    className="flex mr-1 items-center hover:scale-125 duration-200"
+                    onClick={() => {
+                      handleUpVote(data._id, "up");
+                    }}
+                  >
+                    <img
+                      style={{
+                        filter: commentUpVoted
+                          ? "contrast(200%)"
+                          : "contrast(100%)",
+                      }}
+                      className="h-4"
+                      src={upArrow}
+                    ></img>
+                  </button>
+                  <p className="mr-1 bold">{data.upVotes}</p>
+                  <button
+                    className="flex items-center hover:scale-125  duration-200"
+                    onClick={() => {
+                      handleUpVote(data._id, "down");
+                    }}
+                  >
+                    <img
+                      className="h-4"
+                      src={downArrow}
+                      style={{
+                        filter: commentDownVoted
+                          ? "contrast(200%)"
+                          : "contrast(100%)",
+                      }}
+                    ></img>
+                  </button>
+                </div>
               </div>
               <p className="text-xl bold">{data.title}</p>
               <p className="text-lg">{data.text}</p>
@@ -135,41 +173,6 @@ const Post = ({
                   )}
                 </button>
               </div>
-            </div>
-            <div className="flex w-[15rem] justify-end">
-              <button
-                className="flex mr-1 items-center hover:scale-125 duration-200"
-                onClick={() => {
-                  handleUpVote(data._id, "up");
-                }}
-              >
-                <img
-                  style={{
-                    filter: commentUpVoted
-                      ? "contrast(200%)"
-                      : "contrast(100%)",
-                  }}
-                  className="h-4"
-                  src={upArrow}
-                ></img>
-              </button>
-              <p className="mr-1 bold">{data.upVotes}</p>
-              <button
-                className="flex items-center hover:scale-125  duration-200"
-                onClick={() => {
-                  handleUpVote(data._id, "down");
-                }}
-              >
-                <img
-                  className="h-4"
-                  src={downArrow}
-                  style={{
-                    filter: commentDownVoted
-                      ? "contrast(200%)"
-                      : "contrast(100%)",
-                  }}
-                ></img>
-              </button>
             </div>
           </div>
         </div>

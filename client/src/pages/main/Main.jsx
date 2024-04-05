@@ -76,51 +76,59 @@ const Main = ({
 
       <div className="h-[25vh] mt-8 sm:h-[50vh] w-[70vw] mx-auto flex items-center justify-between">
         <div className="w-[30rem]">
-          <h1 className="text-2xl text-white sm:text-7xl bold">
+          <h1 className="text-2xl text-white sm:text-5xl md:text-7xl bold">
             Find Solutions
           </h1>
-          <h2 className="text-md mt-2 sm:text-3xl text-slate-300">
+          <h2 className="text-base mt-2 sm:text-xl md:text-3xl text-slate-300">
             The #1 Cryptocurrency Forum on the Blockchain
           </h2>
         </div>
 
         <img className="hidden sm:block h-full pt-16" src={heroImage}></img>
       </div>
-      <div className="bg-white sm:pt-12 pt-4">
-        <div className="sm:w-[70vw] mx-auto flex-col sm:flex-row justify-between">
-          <div className="mx-2 sm:mx-0 sm:w-[70%]">
-            <div className="flex justify-between mb-8">
-              <h3 className="text-xl sm:text-3xl bold pb-2">
+      <div className="bg-white sm:pt-8 pt-4">
+        <div className="md:w-[70vw] md:mx-auto sm:flex justify-between">
+          <div className="mx-2 sm:mx-4 md:mx-0 sm:w-[70%]">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4 mx-2 sm:mx-0">
+              <h3 className="text-xl sm:text-4xl bold pb-1 mr-2 sm:pb-0">
                 Browse Forum Messages
               </h3>
 
               <button
-                className="text-xs sm:text-md bg-black px-4 rounded hover:bg-gray-600 duration-200 text-white regular"
+                className="text-sm sm:text-base w-36 sm:w-auto bg-black px-4 py-2 sm:py-4 rounded hover:bg-gray-600 duration-200 text-white regular"
                 onClick={() => handleOpenPostForm()}
               >
                 ASK A QUESTION
               </button>
             </div>
-            <div className="flex place-items-center">
-              <p className="bold mr-4">Sort By:</p>
-              <button
-                className=" px-3 py-1 rounded  duration-200 mr-4"
-                onClick={() => handleSortByDate()}
-                style={{
-                  backgroundColor: sortedBy === "upVotes" ? "black" : "#4B5563",
-                }}
-              >
-                <p className="text-sm text-white regular">Most Recent</p>
-              </button>
-              <button
-                className=" px-3 py-1 rounded duration-200 mr-4"
-                onClick={() => handleSortByUpVotes()}
-                style={{
-                  backgroundColor: sortedBy === "upVotes" ? "#4B5563" : "black",
-                }}
-              >
-                <p className="text-sm text-white regular">Most Popular</p>
-              </button>
+            <div className="flex flex-col sm:flex-row sm:place-items-center mb-6 sm:mb-0 mx-2 sm:mx-0">
+              <p className="bold mr-4 text">Sort By:</p>
+              <div>
+                <button
+                  className="px-2 sm:px-3 py-1 rounded duration-200 mr-2 sm:mr-4"
+                  onClick={() => handleSortByDate()}
+                  style={{
+                    backgroundColor:
+                      sortedBy === "upVotes" ? "black" : "#4B5563",
+                  }}
+                >
+                  <p className="text-xs sm:text-sm text-white regular">
+                    Most Recent
+                  </p>
+                </button>
+                <button
+                  className="px-2 sm:px-3 py-1 rounded duration-200"
+                  onClick={() => handleSortByUpVotes()}
+                  style={{
+                    backgroundColor:
+                      sortedBy === "upVotes" ? "#4B5563" : "black",
+                  }}
+                >
+                  <p className="text-xs sm:text-sm text-white regular">
+                    Most Popular
+                  </p>
+                </button>
+              </div>
             </div>
             <div>
               {postFormActive ? (
@@ -154,7 +162,7 @@ const Main = ({
               })
             )}
           </div>
-          <div className="bg-gray-200 h-fit w-[25%] p-6 flex flex-col justify-center items-center rounded">
+          <div className="bg-gray-200 h-fit mx-2 my-4 sm:my-0 md:m-0 sm:w-[25%] p-6 flex flex-col justify-center items-center rounded">
             <div>
               <h2 className="text-2xl bold pb-2">News</h2>
               <a
