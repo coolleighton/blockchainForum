@@ -59,7 +59,7 @@ const PostForm = ({
           <p className="text-gray-400 text-xs mb-4">
             Write a Post as <span className="text-blue-400">{profileData}</span>
           </p>
-          <label className="block text-md mb-2" htmlFor="title">
+          <label className="block text-xl mb-2 bold" htmlFor="title">
             Post Title
           </label>
           <input
@@ -72,7 +72,7 @@ const PostForm = ({
             required
           />
           <hr></hr>
-          <label className="block text-md mt-4 mb-2" htmlFor="extra">
+          <label className="block text-lg mt-4 mb-2" htmlFor="extra">
             Description
           </label>
           <textarea

@@ -1,4 +1,5 @@
 import Header from "../../components/header.jsx";
+import Footer from "../../components/Footer.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +45,7 @@ const Signup = ({ profileData, Url }) => {
     <div>
       <Header profileData={profileData}></Header>
 
-      <div className="mt-16 h-[85vh] w-[100vw] flex items-center justify-center">
+      <div className="mt-16 h-[90vh] w-[100vw] flex items-center justify-center">
         <div className="mx-4 sm:mx-0">
           <h1 className="text-center bold text-2xl mb-8">
             Sign Up to the Blockchain Forum
@@ -126,6 +127,7 @@ const Signup = ({ profileData, Url }) => {
           </p>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };

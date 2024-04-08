@@ -1,11 +1,12 @@
 import "./main.css";
 import heroImage from "../../images/heroImage.png";
-import arrowRight from "../../images/arrowRight.png";
 
 import Header from "../../components/header.jsx";
 import Post from "../../components/post/PostComponent/Post.jsx";
 import PostForm from "../../components/PostForm.jsx";
 import LoginMessage from "../../components/LoginMessage.jsx";
+import News from "../../components/News.jsx";
+import Footer from "../../components/Footer.jsx";
 import { useState } from "react";
 
 const Main = ({
@@ -20,6 +21,24 @@ const Main = ({
   const [sortedBy, setSortedBy] = useState("datePosted");
   const [loginMessage, setLoginMessage] = useState("up vote a post");
   const [LoginMessageActive, setLoginMessageActive] = useState(false);
+  const [listSize, setListSize] = useState(10);
+
+  // handle the show more button clicks
+
+  const handleShowMore = () => {
+    let newListSize = listSize + 10;
+    if (newListSize > backendData.length) {
+      newListSize = backendData.length;
+    }
+    setListSize(newListSize);
+  };
+
+  // handle the show less button clicks
+
+  const handleShowLess = () => {
+    let newListSize = 10;
+    setListSize(newListSize);
+  };
 
   // sort data by either date or upvotes
 
@@ -34,6 +53,8 @@ const Main = ({
       );
     }
   }
+
+  console.log(sortedData);
 
   // handle either open form or toggle open form
 
@@ -84,9 +105,13 @@ const Main = ({
           </h2>
         </div>
 
-        <img className="hidden sm:block h-full pt-16" src={heroImage}></img>
+        <img
+          className="hidden sm:block h-full pt-16"
+          src={heroImage}
+          alt="man working on laptop"
+        ></img>
       </div>
-      <div className="bg-white sm:pt-8 pt-4">
+      <div className="bg-white sm:pt-8 pt-4 pb-2 sm:pb-0">
         <div className="md:w-[70vw] md:mx-auto sm:flex justify-between">
           <div className="mx-2 sm:mx-4 md:mx-0 sm:w-[70%]">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4 mx-2 sm:mx-0">
@@ -101,7 +126,7 @@ const Main = ({
                 ASK A QUESTION
               </button>
             </div>
-            <div className="flex flex-col sm:flex-row sm:place-items-center mb-6 sm:mb-0 mx-2 sm:mx-0">
+            <div className="flex flex-col sm:flex-row mb-6 sm:mb-0 mx-2 sm:mx-0">
               <p className="bold mr-4 text">Sort By:</p>
               <div>
                 <button
@@ -147,7 +172,7 @@ const Main = ({
             {typeof backendData === "undefined" ? (
               <p>Loading...</p>
             ) : (
-              backendData.map((sortedData) => {
+              backendData.slice(0, listSize).map((sortedData) => {
                 return (
                   <Post
                     data={sortedData}
@@ -161,68 +186,31 @@ const Main = ({
                 );
               })
             )}
-          </div>
-          <div className="bg-gray-200 h-fit mx-2 my-4 sm:my-0 md:m-0 sm:w-[25%] p-6 flex flex-col justify-center items-center rounded">
-            <div>
-              <h2 className="text-2xl bold pb-2">News</h2>
-              <a
-                rel="noreferrer"
-                href="https://www.benjamindada.com/zone-raises-seed-blockchain-fintech-nigerian/"
-                target="_blank"
-              >
-                <button className="flex items-center hover:brightness-0 duration-200 pt-2">
-                  <p className="regular text-gray-600 text-sm text-left">
-                    Nigerian blockchain fintech startup Zone raises $8.5M Seed
-                  </p>
-                  <img src={arrowRight} className="h-6 pl-1"></img>
+            <div className="flex flex-col sm:flex-row w-[100%] justify-end items-center mt-4 mb-4 sm:mb-12">
+              <p className="sm:pr-4 text-sm mb-2">
+                Showing {listSize} of {backendData.length}
+              </p>
+              <div>
+                <button
+                  className="text-sm sm:text-base mr-2 mb-2 bg-black px-3  py-1 rounded hover:bg-gray-600 duration-200 text-white regular"
+                  onClick={() => handleShowLess()}
+                >
+                  Show Less
                 </button>
-              </a>
-              <hr className="border-gray-400 my-2"></hr>
-              <a
-                rel="noreferrer"
-                href="https://news.google.com/articles/CBMiY2h0dHBzOi8vcmVzZWFyY2guY2hlY2twb2ludC5jb20vMjAyNC9ldGhlcmV1bXMtY3JlYXRlMi1hLWRvdWJsZS1lZGdlZC1zd29yZC1pbi1ibG9ja2NoYWluLXNlY3VyaXR5L9IBAA?hl=en-GB&gl=GB&ceid=GB%3Aen"
-                target="_blank"
-              >
-                <button className="flex items-center hover:brightness-0 duration-200 pt-2">
-                  <p className="regular text-gray-600 text-sm text-left">
-                    Ethereums create2 a double edged sword in blockchain
-                    security
-                  </p>
-                  <img src={arrowRight} className="h-6 pl-1"></img>
+                <button
+                  className="text-sm sm:text-base bg-black px-3 py-1 rounded hover:bg-gray-600 duration-200 text-white regular"
+                  onClick={() => handleShowMore()}
+                >
+                  Show More
                 </button>
-              </a>
-              <hr className="border-gray-400 my-2"></hr>
-              <a
-                href="https://techxplore.com/news/2024-03-team-blockchain-based-method-personal.html"
-                rel="noreferrer"
-                target="_blank"
-              >
-                <button className="flex items-center hover:brightness-0 duration-200 pt-2">
-                  <p className="regular text-gray-600 text-sm text-left">
-                    Team develops blockchain-based method to protect personal
-                    data on the internet
-                  </p>
-                  <img src={arrowRight} className="h-6 pl-1"></img>
-                </button>
-              </a>
-              <hr className="border-gray-400 my-2"></hr>
-              <a
-                href="https://news.bitcoin.com/wu-tangs-ghostface-killah-to-release-exclusive-music-collection-on-bitcoin-blockchain/"
-                rel="noreferrer"
-                target="_blank"
-              >
-                <button className="flex items-center hover:brightness-0 duration-200 pt-2">
-                  <p className="regular text-gray-600 text-sm text-left">
-                    Wu-Tang's Ghostface Killah to Release Music Collection on
-                    Bitcoin Blockchain
-                  </p>
-                  <img src={arrowRight} className="h-6 pl-1"></img>
-                </button>
-              </a>
+              </div>
             </div>
           </div>
+          <News></News>
         </div>
       </div>
+      <Footer></Footer>
+
       {LoginMessageActive ? (
         <LoginMessage
           loginMessage={loginMessage}
