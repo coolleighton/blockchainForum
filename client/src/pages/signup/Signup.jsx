@@ -22,7 +22,7 @@ const Signup = ({ profileData, Url }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(Url + "/auth", {
+      const response = await fetch(Url + "/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
