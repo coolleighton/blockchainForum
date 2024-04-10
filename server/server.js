@@ -13,7 +13,7 @@ const User = require("./models/user");
 
 // connect to mongoDB
 mongoose.set("strictQuery", false);
-const mongoDB = test;
+const mongoDB = process.env.MONGOURL;
 
 main().catch((err) => console.log(err));
 async function main() {
