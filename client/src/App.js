@@ -1,6 +1,7 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 import Main from "./pages/main/Main.jsx";
 import SignUp from "./pages/signup/Signup.jsx";
 import Login from "./pages/login/Login.jsx";

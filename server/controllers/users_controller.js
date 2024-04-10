@@ -30,7 +30,7 @@ exports.login_post = [
   async (req, res, next) => {
     console.log("tried loggin in");
     try {
-      const user = await User.findOne({ username: req.body.username });
+      const user = await User.findOne({ email: req.body.email });
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }

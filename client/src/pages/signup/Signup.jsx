@@ -1,9 +1,59 @@
 import Header from "../../components/header.jsx";
 import Footer from "../../components/Footer.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const Signup = ({ profileData, Url }) => {
+  // handle signup via google auth
+
+  async function handleCallbackResponse(response) {
+    let userObject = jwtDecode(response.credential);
+    console.log(userObject);
+    let userData = {
+      email: userObject.email,
+      password: userObject.sub,
+      username: userObject.name,
+    };
+
+    try {
+      const response = await fetch(Url + "/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        console.log("signUp success");
+        navigate("/login");
+      } else {
+        console.error("Error signing up");
+      }
+    } catch (error) {
+      console.error("Error signing up:", error.message);
+    }
+  }
+
+  // ititialise google log in
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "668090417329-r8v5g2khjctdq9o0ucp0levih650s62j.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+
+    google.accounts.id.renderButton(document.getElementById("googleSignIn"), {
+      theme: "outline",
+      size: "large",
+      width: "400",
+      text: "signup_with",
+    });
+  }, []);
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -101,9 +151,10 @@ const Signup = ({ profileData, Url }) => {
               />
             </div>
             <hr className="mb-8"></hr>
-            <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200">
+            <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200 mb-4">
               Sign Up
             </button>
+            <div id="googleSignIn"></div>
           </form>
           <p className="sm:w-[20rem] text-center mx-auto mt-6 text-xs text-gray-500">
             Secure Sign up with PassportJS & bcrypt subject to Google{" "}
