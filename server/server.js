@@ -13,7 +13,7 @@ const User = require("./models/user");
 
 // connect to mongoDB
 mongoose.set("strictQuery", false);
-const mongoDB = process.env.MONGOURL;
+const mongoDB = test;
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -24,8 +24,8 @@ async function main() {
 app.use(function (req, res, next) {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    //"https://main--blockchainforum.netlify.app"
-    "*"
+    "https://blockchainforum.netlify.app"
+    //"*"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
