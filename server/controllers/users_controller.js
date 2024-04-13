@@ -10,6 +10,14 @@ exports.signup_post = [
       if (err) {
         console.log("unable to hash");
       }
+      const user = await User.findOne({ email: req.body.email });
+      if (user) {
+        return res.status(404).json({
+          error:
+            "This email address is already associated with an account. Try a different email or try to login.",
+          isUser: true,
+        });
+      }
       try {
         const user = new User({
           email: req.body.email,
@@ -32,11 +40,18 @@ exports.login_post = [
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
-        return res.status(404).json({ error: "User not found" });
+        return res.status(404).json({
+          error:
+            "This email address was not found. Try a different email or sign up.",
+        });
       }
+
       const match = await bcrypt.compare(req.body.password, user.password);
       if (!match) {
-        return res.status(404).json({ error: "Incorrect password" });
+        return res.status(404).json({
+          error:
+            "This password was incorrect. Try a different password or try to login using your google account.",
+        });
       }
 
       jwt.sign(

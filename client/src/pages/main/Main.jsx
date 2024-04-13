@@ -54,8 +54,6 @@ const Main = ({
     }
   }
 
-  console.log(sortedData);
-
   // handle either open form or toggle open form
 
   const handleTogglePostForm = () => {

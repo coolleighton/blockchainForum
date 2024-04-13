@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const messageSchema = new Schema({
-  email: { type: String, required: true },
-  username: { type: String, required: true },
-  password: { type: String, required: true },
+  email: { type: String, required: true, minLength: 8, maxLength: 150 },
+  username: { type: String, required: true, minLength: 4, maxLength: 150 },
+  password: { type: String, required: true, minLength: 8, maxLength: 64 },
 });
 
 // Export model

@@ -6,6 +6,7 @@ const Header = ({ loggedIn, handleLogout, profileData }) => {
 
   const username = profileData.toString();
 
+  // handle log out
   const handleLogoutThenNavigate = () => {
     handleLogout();
     navigate("/login");

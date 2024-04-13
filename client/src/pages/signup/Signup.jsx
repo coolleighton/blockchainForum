@@ -2,59 +2,22 @@ import Header from "../../components/header.jsx";
 import Footer from "../../components/Footer.jsx";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 const Signup = ({ profileData, Url }) => {
-  // handle signup via google auth
+  const navigate = useNavigate();
 
-  async function handleCallbackResponse(response) {
-    let userObject = jwtDecode(response.credential);
-    console.log(userObject);
-    let userData = {
-      email: userObject.email,
-      password: userObject.sub,
-      username: userObject.name,
-    };
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
 
-    try {
-      const response = await fetch(Url + "/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (response.ok) {
-        console.log("signUp success");
-        navigate("/login");
-      } else {
-        console.error("Error signing up");
-      }
-    } catch (error) {
-      console.error("Error signing up:", error.message);
-    }
-  }
-
-  // ititialise google log in
-
+  // handle login via google auth
   useEffect(() => {
     /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "668090417329-r8v5g2khjctdq9o0ucp0levih650s62j.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-
     google.accounts.id.renderButton(document.getElementById("googleSignIn"), {
       theme: "outline",
       size: "large",
       width: "400",
-      text: "signup_with",
     });
   }, []);
 
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -84,7 +47,10 @@ const Signup = ({ profileData, Url }) => {
         console.log("signUp success");
         navigate("/login");
       } else {
-        console.error("Error signing up");
+        const data = await response.json();
+        console.error("Error signing in");
+        console.error(data.error);
+        setLoginErrorMessage(data.error);
       }
     } catch (error) {
       console.error("Error signing up:", error.message);
@@ -106,6 +72,12 @@ const Signup = ({ profileData, Url }) => {
             method="POST"
             onSubmit={handleSubmit}
           >
+            <div
+              className="pb-4"
+              style={{ display: loginErrorMessage ? "block" : "hidden" }}
+            >
+              <p className="text-red-600 text-sm">{loginErrorMessage}</p>
+            </div>
             <div className="flex-col">
               <label className="block text-xs pb-2" htmlFor="username">
                 Username*
@@ -117,6 +89,8 @@ const Signup = ({ profileData, Url }) => {
                 type="username"
                 value={formData.username}
                 onChange={handleChange}
+                minLength={4}
+                maxLength={150}
                 required
               />
             </div>
@@ -132,6 +106,8 @@ const Signup = ({ profileData, Url }) => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
+                minLength={8}
+                maxLength={150}
                 required
               />
             </div>
@@ -147,13 +123,19 @@ const Signup = ({ profileData, Url }) => {
                 type="password"
                 value={formData.password}
                 onChange={handleChange}
+                minLength={8}
+                maxLength={64}
                 required
               />
             </div>
             <hr className="mb-8"></hr>
-            <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200 mb-4">
+            <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200 ">
               Sign Up
             </button>
+            <div className="flex justify-center w-full">
+              <p className="my-4 text-xs">Or</p>
+            </div>
+
             <div id="googleSignIn"></div>
           </form>
           <p className="sm:w-[20rem] text-center mx-auto mt-6 text-xs text-gray-500">

@@ -2,52 +2,14 @@ import Header from "../../components/header.jsx";
 import Footer from "../../components/Footer.jsx";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 const Login = ({ profileData, Url, loggedIn }) => {
+  const navigate = useNavigate();
+  const [loginErrorMessage, setLoginErrorMessage] = useState("");
+
   // handle login via google auth
-
-  async function handleCallbackResponse(response) {
-    let userObject = jwtDecode(response.credential);
-    console.log(userObject);
-    let userData = { email: userObject.email, password: userObject.sub };
-
-    try {
-      const response = await fetch(Url + "/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        const token = data.token;
-
-        // Save token to local storage
-        localStorage.setItem("token", token);
-        navigate("/");
-        window.location.reload();
-      } else {
-        console.error("Error logging in");
-      }
-    } catch (error) {
-      console.error("Error logging in:", error.message);
-    }
-  }
-
-  // ititialise google log in
-
   useEffect(() => {
     /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "668090417329-r8v5g2khjctdq9o0ucp0levih650s62j.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-
     google.accounts.id.renderButton(document.getElementById("googleSignIn"), {
       theme: "outline",
       size: "large",
@@ -55,7 +17,7 @@ const Login = ({ profileData, Url, loggedIn }) => {
     });
   }, []);
 
-  const navigate = useNavigate();
+  // handle form submit data
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -70,7 +32,6 @@ const Login = ({ profileData, Url, loggedIn }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch(Url + "/auth/login", {
         method: "POST",
@@ -90,7 +51,10 @@ const Login = ({ profileData, Url, loggedIn }) => {
         navigate("/");
         window.location.reload();
       } else {
+        const data = await response.json();
         console.error("Error logging in");
+        console.error(data.error);
+        setLoginErrorMessage(data.error);
       }
     } catch (error) {
       console.error("Error logging in:", error.message);
@@ -106,7 +70,15 @@ const Login = ({ profileData, Url, loggedIn }) => {
           <h1 className="text-center bold text-2xl mb-8">
             Log in to Blockchain Forum
           </h1>
+
           <form className=" sm:w-[25rem]" onSubmit={handleSubmit}>
+            <div
+              className="pb-4"
+              style={{ display: loginErrorMessage ? "block" : "hidden" }}
+            >
+              <p className="text-red-600 text-sm">{loginErrorMessage}</p>
+            </div>
+
             <div className="flex-col">
               <label className="block text-xs pb-2" htmlFor="email">
                 E-mail*
@@ -136,10 +108,16 @@ const Login = ({ profileData, Url, loggedIn }) => {
                 required
               />
             </div>
+
             <hr className="mb-8"></hr>
-            <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200 mb-4">
+
+            <button className="w-full bg-black text-white py-2 rounded bold hover:bg-gray-700 duration-200">
               Login
             </button>
+
+            <div className="flex justify-center w-full">
+              <p className="my-4 text-xs">Or</p>
+            </div>
             <div id="googleSignIn"></div>
           </form>
           <p className="sm:w-[20rem] text-center mx-auto mt-6 text-xs text-gray-500">
