@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = ({ profileData, Url }) => {
-  document.body.scrollTop = document.documentElement.scrollTop = 0;
-
   const navigate = useNavigate();
 
   const [loginErrorMessage, setLoginErrorMessage] = useState("");

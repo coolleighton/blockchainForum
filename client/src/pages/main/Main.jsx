@@ -23,8 +23,6 @@ const Main = ({
   const [LoginMessageActive, setLoginMessageActive] = useState(false);
   const [listSize, setListSize] = useState(10);
 
-  document.body.scrollTop = document.documentElement.scrollTop = 0;
-
   // handle the show more button clicks
 
   const handleShowMore = () => {
