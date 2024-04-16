@@ -4,9 +4,10 @@ import downArrow from "../../images/downArrow.png";
 import { useState } from "react";
 
 const Comment = ({
+  backendData,
+  setBackendData,
   comment,
   id,
-  setNewPostTitle,
   loggedIn,
   setLoginMessage,
   setLoginMessageActive,
@@ -17,33 +18,53 @@ const Comment = ({
 
   const handleUpVote = async (direction) => {
     if (loggedIn) {
-      let amount = 0;
+      let amount = comment.upVotes;
 
       if (direction === "up") {
-        amount = comment.upVotes;
         if (commentDownVoted === true && commentUpVoted === false) {
           setCommentUpVoted(true);
           setCommentDownVoted(false);
-          amount = amount + 1;
+          amount = amount + 2;
         } else if (commentDownVoted === false && commentUpVoted === false) {
           setCommentUpVoted(true);
+          amount = amount + 1;
         } else if (commentDownVoted === false && commentUpVoted === true) {
           setCommentUpVoted(false);
-          amount = amount - 2;
+          amount = amount - 1;
         }
       } else {
-        amount = comment.upVotes - 2;
         if (commentUpVoted === true && commentDownVoted === false) {
           setCommentDownVoted(true);
           setCommentUpVoted(false);
-          amount = amount - 1;
+          amount = amount - 2;
         } else if (commentUpVoted === false && commentDownVoted === false) {
           setCommentDownVoted(true);
+          amount = amount - 1;
         } else if (commentUpVoted === false && commentDownVoted === true) {
           setCommentDownVoted(false);
-          amount = amount + 2;
+          amount = amount + 1;
         }
       }
+
+      // update client
+
+      console.log(backendData);
+
+      const amendedPostsData = backendData.map((post) => {
+        if (post._id === id) {
+          post.comments = post.comments.map((commentToUpVote) => {
+            if (commentToUpVote.Comment === comment.Comment) {
+              commentToUpVote.upVotes = amount;
+              return commentToUpVote;
+            } else return commentToUpVote;
+          });
+          return post;
+        } else return post;
+      });
+
+      setBackendData(amendedPostsData);
+
+      // update server
 
       try {
         const response = await fetch(Url + "/messages/commentUpVote", {
@@ -69,7 +90,6 @@ const Comment = ({
         console.error("Error creating post:", error.message);
         // Handle network errors or other unexpected errors
       }
-      setNewPostTitle(amount + id); // tiggers messages frontend API to request new data
     } else {
       setLoginMessage("ask a question");
       setLoginMessageActive(true);

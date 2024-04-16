@@ -9,11 +9,10 @@ import Login from "./pages/login/Login.jsx";
 function App() {
   const [backendData, setBackendData] = useState([{}]);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [newPostTitle, setNewPostTitle] = useState("newPost");
   const [profileData, setProfileData] = useState("");
 
-  //const Url = "";
-  const Url = "https://blockchainforum.fly.dev";
+  const Url = "";
+  //const Url = "https://blockchainforum.fly.dev";
 
   // google signup then sign in callback function
   async function handleCallbackResponse(response) {
@@ -90,7 +89,7 @@ function App() {
       .then((data) => {
         setBackendData(data);
       });
-  }, [newPostTitle]);
+  }, []);
 
   // Check if the user is logged in by sending a request to the backend
   useEffect(() => {
@@ -135,8 +134,8 @@ function App() {
           backendData={backendData}
           loggedIn={loggedIn}
           handleLogout={handleLogout}
-          setNewPostTitle={setNewPostTitle}
           profileData={profileData}
+          setBackendData={setBackendData}
           Url={Url}
         />
       ),

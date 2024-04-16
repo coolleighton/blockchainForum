@@ -125,9 +125,11 @@ exports.upVote_post = [
 
     try {
       // add increase upvotes
-      messageById.upVotes = req.body.amount + 1;
+      messageById.upVotes = req.body.amount;
 
-      console.log(messageById);
+      console.log(messageById.upVotes);
+
+      console.log(req.body.amount);
 
       // update the post with comment
       const updatedPostWithComment = await Message.findByIdAndUpdate(
@@ -177,7 +179,7 @@ exports.commentUpVote_post = [
     try {
       // add increase upvotes
 
-      commentById.upVotes = req.body.amount + 1;
+      commentById.upVotes = req.body.amount;
 
       console.log(messageById.comments[commentIndexById]);
 

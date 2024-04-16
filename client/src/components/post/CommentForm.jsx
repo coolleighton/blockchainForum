@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 const CommentForm = ({
+  backendData,
+  setBackendData,
   id,
-  setNewPostTitle,
   loggedIn,
   setLoginMessage,
   setLoginMessageActive,
@@ -25,9 +26,22 @@ const CommentForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (loggedIn) {
-      console.log(commentData);
+    const amendedPostsData = backendData.map((post) => {
+      if (post._id === id) {
+        post.comments.push({
+          Comment: commentData.comment,
+          user: profileData,
+          posted: new Date(),
+          upVotes: 0,
+          id: id,
+        });
+        return post;
+      } else return post;
+    });
 
+    setBackendData(amendedPostsData);
+
+    if (loggedIn) {
       try {
         const response = await fetch(Url + "/messages/comment", {
           method: "POST",
@@ -48,7 +62,6 @@ const CommentForm = ({
         console.error("Error creating post:", error.message);
         // Handle network errors or other unexpected errors
       }
-      setNewPostTitle(commentData.comment); // tiggers messages API to request new data
       setCommentData({
         // clear comments text area
         ...commentData,

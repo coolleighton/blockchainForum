@@ -3,10 +3,11 @@ import { useState } from "react";
 
 const PostForm = ({
   handleTogglePostForm,
-  setNewPostTitle,
   handleSortByDate,
   Url,
   profileData,
+  setBackendData,
+  backendData,
 }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -24,9 +25,19 @@ const PostForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-
-    setNewPostTitle(formData.title); // tiggers messages API to request new data
     handleSortByDate();
+
+    setBackendData([
+      ...backendData,
+      {
+        author: profileData,
+        title: formData.title,
+        text: formData.text,
+        posted: new Date(),
+        upVotes: 0,
+        comments: [],
+      },
+    ]);
 
     try {
       const response = await fetch(Url + "/messages", {

@@ -11,9 +11,9 @@ import { useState } from "react";
 
 const Main = ({
   backendData,
+  setBackendData,
   loggedIn,
   handleLogout,
-  setNewPostTitle,
   profileData,
   Url,
 }) => {
@@ -157,10 +157,11 @@ const Main = ({
               {postFormActive ? (
                 <PostForm
                   handleTogglePostForm={handleTogglePostForm}
-                  setNewPostTitle={setNewPostTitle}
                   handleSortByDate={handleSortByDate}
                   Url={Url}
                   profileData={profileData}
+                  setBackendData={setBackendData}
+                  backendData={backendData}
                 ></PostForm>
               ) : (
                 <></>
@@ -173,8 +174,9 @@ const Main = ({
               backendData.slice(0, listSize).map((sortedData) => {
                 return (
                   <Post
+                    backendData={backendData}
+                    setBackendData={setBackendData}
                     data={sortedData}
-                    setNewPostTitle={setNewPostTitle}
                     loggedIn={loggedIn}
                     setLoginMessage={setLoginMessage}
                     setLoginMessageActive={setLoginMessageActive}

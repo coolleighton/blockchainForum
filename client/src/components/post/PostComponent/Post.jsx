@@ -7,8 +7,9 @@ import Comment from "../Comment";
 import CommentForm from "../CommentForm";
 
 const Post = ({
+  backendData,
+  setBackendData,
   data,
-  setNewPostTitle,
   loggedIn,
   setLoginMessage,
   setLoginMessageActive,
@@ -33,33 +34,50 @@ const Post = ({
 
     const handleUpVote = async (id, direction) => {
       if (loggedIn) {
-        let amount = 0;
+        let amount = data.upVotes;
+
+        console.log(data.upVotes);
 
         if (direction === "up") {
-          amount = data.upVotes;
+          // console.log(amount);
           if (commentDownVoted === true && commentUpVoted === false) {
             setCommentUpVoted(true);
             setCommentDownVoted(false);
-            amount = amount + 1;
+            amount = amount + 2;
           } else if (commentDownVoted === false && commentUpVoted === false) {
             setCommentUpVoted(true);
+            amount = amount + 1;
           } else if (commentDownVoted === false && commentUpVoted === true) {
             setCommentUpVoted(false);
-            amount = amount - 2;
+            amount = amount - 1;
           }
         } else {
-          amount = data.upVotes - 2;
+          // console.log(amount);
           if (commentUpVoted === true && commentDownVoted === false) {
             setCommentDownVoted(true);
             setCommentUpVoted(false);
-            amount = amount - 1;
+            amount = amount - 2;
           } else if (commentUpVoted === false && commentDownVoted === false) {
             setCommentDownVoted(true);
+            amount = amount - 1;
           } else if (commentUpVoted === false && commentDownVoted === true) {
             setCommentDownVoted(false);
-            amount = amount + 2;
+            amount = amount + 1;
           }
         }
+
+        // update client
+
+        const amendedPostsData = backendData.map((post) => {
+          if (post._id === id) {
+            post.upVotes = amount;
+            return post;
+          } else return post;
+        });
+
+        setBackendData(amendedPostsData);
+
+        // update server
 
         try {
           const response = await fetch(Url + "/messages/postUpVote", {
@@ -81,7 +99,6 @@ const Post = ({
           console.error("Error creating post:", error.message);
           // Handle network errors or other unexpected errors
         }
-        setNewPostTitle(amount + id); // tiggers messages frontend API to request new data
       } else {
         setLoginMessage("ask a question");
         setLoginMessageActive(true);
@@ -91,7 +108,7 @@ const Post = ({
     return (
       <div
         key={data._id}
-        className=" border-[1px] border-gray-400 mt-4 p-4 rounded"
+        className="border-[1px] border-gray-400 mt-4 p-4 rounded"
       >
         <div className="flex">
           <div className="flex justify-between items-start w-full">
@@ -181,9 +198,10 @@ const Post = ({
           {data.comments.map((comment) => {
             return (
               <Comment
+                backendData={backendData}
+                setBackendData={setBackendData}
                 comment={comment}
                 id={data._id}
-                setNewPostTitle={setNewPostTitle}
                 loggedIn={loggedIn}
                 setLoginMessage={setLoginMessage}
                 setLoginMessageActive={setLoginMessageActive}
@@ -194,8 +212,9 @@ const Post = ({
 
           <hr className="my-4"></hr>
           <CommentForm
+            backendData={backendData}
+            setBackendData={setBackendData}
             id={data._id}
-            setNewPostTitle={setNewPostTitle}
             loggedIn={loggedIn}
             setLoginMessage={setLoginMessage}
             setLoginMessageActive={setLoginMessageActive}
