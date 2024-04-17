@@ -5,6 +5,7 @@ const LoginMessage = ({ loginMessage, setLoginMessageActive }) => {
 
   const handleNavClick = (link) => {
     setLoginMessageActive(false);
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
     navigate(link);
   };
 
