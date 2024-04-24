@@ -1,6 +1,8 @@
 const express = require("express");
 var jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
+const UpvotedPost = require("../models/upvotedPost");
 const bcrypt = require("bcryptjs");
 
 exports.signup_post = [
@@ -23,6 +25,7 @@ exports.signup_post = [
           email: req.body.email,
           username: req.body.username,
           password: hashedPassword,
+          engagement: [],
         });
         const result = await user.save();
         res.sendStatus(201);
@@ -84,6 +87,54 @@ exports.checkAuth_post = [
       }
     });
   },
+];
+
+// add upvote to user
+
+exports.addUpvote_post = [
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    console.log("test");
+
+    // find message to update
+    const userById = await User.findById(req.body.userId);
+
+    // Check if there are validation errors
+    if (!errors.isEmpty()) {
+      // If there are validation errors, return a 400 Bad Request status
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      // Create a new note of upvoted data with escaped and trimmed data.
+
+      const upvotedPost = new UpvotedPost({
+        upvotedPostId: req.body.upvotedPostId,
+        userId: req.body.userId,
+        upVote: req.body.upvote,
+      });
+
+      // add upvote to to user
+      userById.engagement.push(upvotedPost);
+
+      // update the post with comment
+      const updatedUserWithUpvote = await Message.findByIdAndUpdate(
+        req.body.id,
+        userById,
+        {}
+      );
+
+      // If the post is saved successfully, return a 201 Created status
+      console.log("upvote created successfully", updatedUserWithUpvote);
+      return res.sendStatus(201);
+    } catch (err) {
+      // If there's an error while saving the post, return a 500 Internal Server Error status
+      console.error("Error saving post:", err.message);
+      return res.sendStatus(500);
+    }
+  }),
 ];
 
 // Verify Token

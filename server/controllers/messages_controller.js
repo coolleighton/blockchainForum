@@ -28,7 +28,6 @@ exports.question_post = [
 
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
-    console.log(req.body);
 
     const errors = validationResult(req);
 
@@ -112,8 +111,6 @@ exports.upVote_post = [
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
-    console.log(req.body);
-
     // find message to update
     const messageById = await Message.findById(req.body.id);
 
@@ -127,10 +124,6 @@ exports.upVote_post = [
       // add increase upvotes
       messageById.upVotes = req.body.amount;
 
-      console.log(messageById.upVotes);
-
-      console.log(req.body.amount);
-
       // update the post with comment
       const updatedPostWithComment = await Message.findByIdAndUpdate(
         req.body.id,
@@ -139,7 +132,7 @@ exports.upVote_post = [
       );
 
       // If the post is saved successfully, return a 201 Created status
-      console.log("up vote added successfully", updatedPostWithComment);
+      console.log("up vote added successfully");
       return res.sendStatus(201);
     } catch (err) {
       // If there's an error while saving the post, return a 500 Internal Server Error status
@@ -181,18 +174,12 @@ exports.commentUpVote_post = [
 
       commentById.upVotes = req.body.amount;
 
-      console.log(messageById.comments[commentIndexById]);
-
-      console.log(messageById);
-
       // update the post with the updated comment
       const updatedPostWithComment = await Message.findByIdAndUpdate(
         req.body.postId,
         messageById,
         {}
       );
-
-      console.log(updatedPostWithComment);
 
       // If the post is saved successfully, return a 201 Created status
       console.log("up vote added successfully", updatedPostWithComment);

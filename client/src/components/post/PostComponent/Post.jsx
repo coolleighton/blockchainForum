@@ -39,7 +39,6 @@ const Post = ({
         console.log(data.upVotes);
 
         if (direction === "up") {
-          // console.log(amount);
           if (commentDownVoted === true && commentUpVoted === false) {
             setCommentUpVoted(true);
             setCommentDownVoted(false);
@@ -52,7 +51,6 @@ const Post = ({
             amount = amount - 1;
           }
         } else {
-          // console.log(amount);
           if (commentUpVoted === true && commentDownVoted === false) {
             setCommentDownVoted(true);
             setCommentUpVoted(false);
@@ -89,14 +87,41 @@ const Post = ({
           });
 
           if (response.ok) {
-            console.log("Post created successfully");
+            console.log("upvote created successfully");
             // Handle success: maybe display a success message
           } else {
-            console.error("Error creating post");
+            console.error("Error creating upvote");
             // Handle error: maybe display an error message
           }
         } catch (error) {
-          console.error("Error creating post:", error.message);
+          console.error("Error creating upvote:", error.message);
+          // Handle network errors or other unexpected errors
+        }
+
+        // addUpvote_post
+
+        try {
+          const response = await fetch(Url + "/users/addUpvote", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              upvotedPostId: "testpostid",
+              userId: "testuserid",
+              upVote: "testuserid",
+            }),
+          });
+
+          if (response.ok) {
+            console.log("user upvote created successfully");
+            // Handle success: maybe display a success message
+          } else {
+            console.error("Error creating user upvote");
+            // Handle error: maybe display an error message
+          }
+        } catch (error) {
+          console.error("Error creating user upvote:", error.message);
           // Handle network errors or other unexpected errors
         }
       } else {
