@@ -12,7 +12,7 @@ const CommentForm = ({
 }) => {
   const [commentData, setCommentData] = useState({
     comment: "",
-    user: profileData,
+    user: profileData.username,
     id: id,
   });
 
@@ -30,7 +30,7 @@ const CommentForm = ({
       if (post._id === id) {
         post.comments.push({
           Comment: commentData.comment,
-          user: profileData,
+          user: profileData.username,
           posted: new Date(),
           upVotes: 0,
           id: id,
@@ -77,7 +77,8 @@ const CommentForm = ({
     <form action="/messages/comment" method="POST" onSubmit={handleSubmit}>
       {loggedIn ? (
         <p className="text-gray-400 text-xs mb-1">
-          Comment as <span className="text-blue-400">{profileData}</span>
+          Comment as{" "}
+          <span className="text-blue-400">{profileData.username}</span>
         </p>
       ) : (
         ""

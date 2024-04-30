@@ -12,7 +12,7 @@ const PostForm = ({
   const [formData, setFormData] = useState({
     title: "",
     text: "",
-    author: profileData,
+    author: profileData.username,
   });
 
   const handleChange = (e) => {
@@ -30,7 +30,7 @@ const PostForm = ({
     setBackendData([
       ...backendData,
       {
-        author: profileData,
+        author: profileData.username,
         title: formData.title,
         text: formData.text,
         posted: new Date(),
@@ -68,7 +68,8 @@ const PostForm = ({
         <img src={messageIcon} className="h-6 mb-2"></img>
         <form onSubmit={handleSubmit}>
           <p className="text-gray-400 text-xs mb-4">
-            Write a Post as <span className="text-blue-400">{profileData}</span>
+            Write a Post as{" "}
+            <span className="text-blue-400">{profileData.username}</span>
           </p>
           <label className="block text-xl mb-2 bold" htmlFor="title">
             Post Title

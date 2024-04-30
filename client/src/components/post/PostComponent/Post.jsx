@@ -32,6 +32,8 @@ const Post = ({
       }
     };
 
+    // handle up vote
+
     const handleUpVote = async (id, direction) => {
       if (loggedIn) {
         let amount = data.upVotes;
@@ -98,18 +100,18 @@ const Post = ({
           // Handle network errors or other unexpected errors
         }
 
-        // addUpvote_post
-
+        // update server with what the use has upvoted
+        console.log(profileData);
         try {
-          const response = await fetch(Url + "/users/addUpvote", {
+          const response = await fetch(Url + "/auth/addUpvote", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              upvotedPostId: "testpostid",
-              userId: "testuserid",
-              upVote: "testuserid",
+              upvotedPostId: data._id,
+              userId: profileData._id,
+              upVote: 5,
             }),
           });
 

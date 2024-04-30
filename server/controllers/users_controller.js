@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const UpvotedPost = require("../models/upvotedPost");
 const bcrypt = require("bcryptjs");
+const { body, validationResult } = require("express-validator");
 
 exports.signup_post = [
   async (req, res, next) => {
@@ -89,6 +90,20 @@ exports.checkAuth_post = [
   },
 ];
 
+// get user data
+
+exports.userData_get = asyncHandler(async (req, res, next) => {
+  try {
+    const userData = await User.find({}, "email username engagement")
+      .sort({ email: 1 })
+      .exec();
+    res.json(userData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 // add upvote to user
 
 exports.addUpvote_post = [
@@ -96,43 +111,101 @@ exports.addUpvote_post = [
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
-    console.log("test");
-
-    // find message to update
-    const userById = await User.findById(req.body.userId);
-
-    // Check if there are validation errors
     if (!errors.isEmpty()) {
+      // Check if there are validation errors
       // If there are validation errors, return a 400 Bad Request status
       return res.status(400).json({ errors: errors.array() });
     }
 
-    try {
-      // Create a new note of upvoted data with escaped and trimmed data.
+    // find message to update
+    const userById = await User.findById(req.body.userId);
 
-      const upvotedPost = new UpvotedPost({
-        upvotedPostId: req.body.upvotedPostId,
-        userId: req.body.userId,
-        upVote: req.body.upvote,
-      });
+    // check if there is already a log of the post
 
-      // add upvote to to user
-      userById.engagement.push(upvotedPost);
+    function isIdMatch(array, targetId) {
+      for (let i = 0; i < array.length; i++) {
+        if (array[i].upvotedPostId === targetId) {
+          return true; // Return true if id matches
+        }
+      }
+      return false; // Return false if no match found
+    }
 
-      // update the post with comment
-      const updatedUserWithUpvote = await Message.findByIdAndUpdate(
-        req.body.id,
-        userById,
-        {}
-      );
+    //  if theres a match just update, if no match create new entry
 
-      // If the post is saved successfully, return a 201 Created status
-      console.log("upvote created successfully", updatedUserWithUpvote);
-      return res.sendStatus(201);
-    } catch (err) {
-      // If there's an error while saving the post, return a 500 Internal Server Error status
-      console.error("Error saving post:", err.message);
-      return res.sendStatus(500);
+    if (isIdMatch(userById.engagement, req.body.upvotedPostId) === true) {
+      console.log("match");
+
+      try {
+        // find that logs index so that it can be deleted and add the new one in
+
+        function getIndexById(array, targetId) {
+          for (let i = 0; i < array.length; i++) {
+            if (array[i].upvotedPostId === targetId) {
+              return i; // Return the index if id matches
+            }
+          }
+          return -1; // Return -1 if no match found
+        }
+
+        const engagementIndex = getIndexById(
+          userById.engagement,
+          req.body.upvotedPostId
+        );
+
+        userById.engagement.splice(engagementIndex, 1);
+
+        const upvotedPost = new UpvotedPost({
+          upvotedPostId: req.body.upvotedPostId,
+          userId: req.body.userId,
+          upVote: req.body.upVote,
+        });
+
+        userById.engagement.push(upvotedPost);
+
+        const updatedUserWithUpvote = await User.findByIdAndUpdate(
+          req.body.userId,
+          userById,
+          {}
+        );
+
+        // If the post is saved successfully, return a 201 Created status
+        console.log("upvote updated successfully");
+        return res.sendStatus(201);
+      } catch (err) {
+        // If there's an error while saving the post, return a 500 Internal Server Error status
+        console.error("Error saving post:", err.message);
+        return res.sendStatus(500);
+      }
+    } else {
+      console.log("not a match");
+      try {
+        // Create a new note of upvoted data
+
+        const upvotedPost = new UpvotedPost({
+          upvotedPostId: req.body.upvotedPostId,
+          userId: req.body.userId,
+          upVote: req.body.upVote,
+        });
+
+        // add upvote to to user
+        userById.engagement.push(upvotedPost);
+
+        // update the post with comment
+        const updatedUserWithUpvote = await User.findByIdAndUpdate(
+          req.body.userId,
+          userById,
+          {}
+        );
+
+        // If the post is saved successfully, return a 201 Created status
+        console.log("upvote created successfully");
+        return res.sendStatus(201);
+      } catch (err) {
+        // If there's an error while saving the post, return a 500 Internal Server Error status
+        console.error("Error saving post:", err.message);
+        return res.sendStatus(500);
+      }
     }
   }),
 ];

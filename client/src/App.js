@@ -9,7 +9,7 @@ import Login from "./pages/login/Login.jsx";
 function App() {
   const [backendData, setBackendData] = useState([{}]);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [profileData, setProfileData] = useState("");
+  const [profileData, setProfileData] = useState([]);
 
   const Url = "";
   //const Url = "https://blockchainforum.fly.dev";
@@ -42,7 +42,6 @@ function App() {
       // sign in
       if (response.ok || data.isUser) {
         userData = { email: userObject.email, password: userObject.sub };
-        console.log(userData);
         try {
           const response = await fetch(Url + "/auth/login", {
             method: "POST",
@@ -91,7 +90,7 @@ function App() {
       });
   }, []);
 
-  // Check if the user is logged in by sending a request to the backend
+  // Check if the user is logged in by sending a request to the backend, if logged in get user data
   useEffect(() => {
     const CheckAuth = async () => {
       const token = localStorage.getItem("token");
@@ -107,7 +106,30 @@ function App() {
         if (response.ok) {
           const data = await response.json();
           setLoggedIn(true);
-          setProfileData(data.authData.user.username);
+
+          const username = data.authData.user.username;
+
+          // get user data
+          try {
+            fetch(Url + "/auth/userData")
+              .then((response) => response.json())
+              .then((data) => {
+                // find user data index from username
+                function findIndexByUsername(array, username) {
+                  for (let i = 0; i < array.length; i++) {
+                    if (array[i].username === username) {
+                      return i; // Return the index if username is found
+                    }
+                  }
+                  return -1; // Return -1 if username is not found
+                }
+
+                // set profile data
+                setProfileData(data[findIndexByUsername(data, username)]);
+              });
+          } catch (error) {
+            console.log(error);
+          }
         } else {
           console.error("Error checking auth");
         }

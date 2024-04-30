@@ -4,7 +4,7 @@ import logo from "../images/logo.png";
 const Header = ({ loggedIn, handleLogout, profileData }) => {
   const navigate = useNavigate();
 
-  const username = profileData.toString();
+  const username = profileData.username;
 
   // handle log out
   const handleLogoutThenNavigate = () => {
