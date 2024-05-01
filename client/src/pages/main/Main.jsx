@@ -83,8 +83,6 @@ const Main = ({
     setSortedBy("upVotes");
   };
 
-  console.log(backendData);
-
   // handle hover effects for buttons that are controlled by inline styles.  can't be done via class names when inline styles are used
 
   return (

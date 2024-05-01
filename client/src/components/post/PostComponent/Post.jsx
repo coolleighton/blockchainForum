@@ -2,7 +2,7 @@ import upArrow from "../../../images/upArrow.png";
 import downArrow from "../../../images/downArrow.png";
 import "./Post.css";
 import GlobalFunctions from "../../../globalFunctions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Comment from "../Comment";
 import CommentForm from "../CommentForm";
 
@@ -20,6 +20,10 @@ const Post = ({
   const [commentUpVoted, setCommentUpVoted] = useState(false);
   const [commentDownVoted, setCommentDownVoted] = useState(false);
 
+  if (profileData === true) {
+    console.log(profileData);
+  }
+
   let commentsLength = 0;
   if (data.comments) {
     commentsLength = data.comments.length;
@@ -32,37 +36,42 @@ const Post = ({
       }
     };
 
-    // handle up vote
+    // handle up vote, decide what value to add to server and what value to add to user log
 
     const handleUpVote = async (id, direction) => {
       if (loggedIn) {
+        let userlogValue = 0;
         let amount = data.upVotes;
-
-        console.log(data.upVotes);
 
         if (direction === "up") {
           if (commentDownVoted === true && commentUpVoted === false) {
             setCommentUpVoted(true);
             setCommentDownVoted(false);
+            userlogValue = 1;
             amount = amount + 2;
           } else if (commentDownVoted === false && commentUpVoted === false) {
             setCommentUpVoted(true);
             amount = amount + 1;
+            userlogValue = 1;
           } else if (commentDownVoted === false && commentUpVoted === true) {
             setCommentUpVoted(false);
             amount = amount - 1;
+            userlogValue = 0;
           }
         } else {
           if (commentUpVoted === true && commentDownVoted === false) {
             setCommentDownVoted(true);
             setCommentUpVoted(false);
             amount = amount - 2;
+            userlogValue = -1;
           } else if (commentUpVoted === false && commentDownVoted === false) {
             setCommentDownVoted(true);
             amount = amount - 1;
+            userlogValue = -1;
           } else if (commentUpVoted === false && commentDownVoted === true) {
             setCommentDownVoted(false);
             amount = amount + 1;
+            userlogValue = 0;
           }
         }
 
@@ -101,7 +110,7 @@ const Post = ({
         }
 
         // update server with what the use has upvoted
-        console.log(profileData);
+
         try {
           const response = await fetch(Url + "/auth/addUpvote", {
             method: "POST",
@@ -111,7 +120,7 @@ const Post = ({
             body: JSON.stringify({
               upvotedPostId: data._id,
               userId: profileData._id,
-              upVote: 5,
+              upVote: userlogValue,
             }),
           });
 
