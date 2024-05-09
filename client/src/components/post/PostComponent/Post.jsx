@@ -19,10 +19,34 @@ const Post = ({
   const [commentsActive, setCommentsActive] = useState(false);
   const [commentUpVoted, setCommentUpVoted] = useState(false);
   const [commentDownVoted, setCommentDownVoted] = useState(false);
+  const [openingUpvoteValue, setOpeningUpvoteValue] = useState(0);
 
-  if (profileData === true) {
-    console.log(profileData);
-  }
+  // if user has already upvoted a post previously, save to this post state value
+
+  useEffect(() => {
+    if (profileData.engagement) {
+      for (let i = 0; i < profileData.engagement.length; i++) {
+        if (profileData.engagement[i].upvotedPostId === data._id) {
+          setOpeningUpvoteValue(profileData.engagement[i].upVote);
+        }
+      }
+    }
+  }, [profileData.engagement]);
+
+  // update client with current upvote value
+
+  useEffect(() => {
+    if (openingUpvoteValue === 0) {
+      setCommentDownVoted(false);
+      setCommentUpVoted(false);
+    } else if (openingUpvoteValue === 1) {
+      setCommentDownVoted(false);
+      setCommentUpVoted(true);
+    } else if (openingUpvoteValue === -1) {
+      setCommentDownVoted(true);
+      setCommentUpVoted(false);
+    }
+  }, [openingUpvoteValue]);
 
   let commentsLength = 0;
   if (data.comments) {
@@ -142,10 +166,7 @@ const Post = ({
     };
 
     return (
-      <div
-        key={data._id}
-        className="border-[1px] border-gray-400 mt-4 p-4 rounded"
-      >
+      <div className="border-[1px] border-gray-400 mt-4 p-4 rounded">
         <div className="flex">
           <div className="flex justify-between items-start w-full">
             <div className="w-full">
@@ -181,6 +202,7 @@ const Post = ({
                       }}
                       className="h-4"
                       src={upArrow}
+                      alt="upArrow"
                     ></img>
                   </button>
                   <p className="mr-1 bold">{data.upVotes}</p>
@@ -198,6 +220,7 @@ const Post = ({
                           ? "contrast(200%)"
                           : "contrast(100%)",
                       }}
+                      alt="downArrow"
                     ></img>
                   </button>
                 </div>
@@ -234,6 +257,7 @@ const Post = ({
           {data.comments.map((comment) => {
             return (
               <Comment
+                key={comment._id}
                 backendData={backendData}
                 setBackendData={setBackendData}
                 comment={comment}
@@ -242,6 +266,7 @@ const Post = ({
                 setLoginMessage={setLoginMessage}
                 setLoginMessageActive={setLoginMessageActive}
                 Url={Url}
+                profileData={profileData}
               ></Comment>
             );
           })}

@@ -86,14 +86,18 @@ const Main = ({
   // handle hover effects for buttons that are controlled by inline styles.  can't be done via class names when inline styles are used
 
   return (
-    <div className="flex-col bg-black relative">
+    <div key="main-component" className="flex-col bg-black relative">
       <Header
+        key="header-component"
         loggedIn={loggedIn}
         handleLogout={handleLogout}
         profileData={profileData}
       ></Header>
 
-      <div className="h-[25vh] mt-8 sm:h-[50vh] w-[70vw] mx-auto flex items-center justify-between">
+      <div
+        key="hero-component"
+        className="h-[25vh] mt-8 sm:h-[50vh] w-[70vw] mx-auto flex items-center justify-between"
+      >
         <div className="w-[30rem]">
           <h1 className="text-2xl text-white sm:text-5xl md:text-7xl bold">
             Find Solutions
@@ -109,9 +113,15 @@ const Main = ({
           alt="man working on laptop"
         ></img>
       </div>
-      <div className="bg-white sm:pt-8 pt-4 pb-2 sm:pb-0">
-        <div className="md:w-[70vw] md:mx-auto sm:flex justify-between">
-          <div className="mx-2 sm:mx-4 md:mx-0 sm:w-[70%]">
+      <div
+        className="bg-white sm:pt-8 pt-4 pb-2 sm:pb-0"
+        key="mainawarea-component"
+      >
+        <div
+          className="md:w-[70vw] md:mx-auto sm:flex justify-between"
+          key="tester342341"
+        >
+          <div className="mx-2 sm:mx-4 md:mx-0 sm:w-[70%]" key="tester1">
             <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-4 mx-2 sm:mx-0">
               <h3 className="text-xl sm:text-4xl bold pb-1 mr-2 sm:pb-0">
                 Browse Forum Messages
@@ -169,10 +179,14 @@ const Main = ({
             </div>
 
             {backendData.length === 1 ? (
-              <div role="status" className="flex justify-center mt-20 mb-32">
+              <div
+                role="status"
+                className="flex justify-center mt-20 mb-32"
+                key="loading"
+              >
                 <svg
                   aria-hidden="true"
-                  class="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-black"
+                  className="w-16 h-16 text-gray-200 animate-spin dark:text-gray-600 fill-black"
                   viewBox="0 0 100 101"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -186,12 +200,13 @@ const Main = ({
                     fill="currentFill"
                   />
                 </svg>
-                <span class="sr-only">Loading...</span>
+                <span className="sr-only">Loading...</span>
               </div>
             ) : (
               backendData.slice(0, listSize).map((sortedData) => {
                 return (
                   <Post
+                    key={sortedData.id}
                     backendData={backendData}
                     setBackendData={setBackendData}
                     data={sortedData}
@@ -224,7 +239,7 @@ const Main = ({
               </div>
             </div>
           </div>
-          <News></News>
+          <News key="news-component"></News>
         </div>
       </div>
       <Footer></Footer>

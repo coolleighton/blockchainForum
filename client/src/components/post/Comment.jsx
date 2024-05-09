@@ -1,7 +1,7 @@
 import GlobalFunctions from "../../globalFunctions";
 import upArrow from "../../images/upArrow.png";
 import downArrow from "../../images/downArrow.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Comment = ({
   backendData,
@@ -12,37 +12,73 @@ const Comment = ({
   setLoginMessage,
   setLoginMessageActive,
   Url,
+  profileData,
 }) => {
   const [commentUpVoted, setCommentUpVoted] = useState(false);
   const [commentDownVoted, setCommentDownVoted] = useState(false);
+  const [openingUpvoteValue, setOpeningUpvoteValue] = useState(0);
+
+  // if user has already upvoted a post previously, save to this post state value
+
+  useEffect(() => {
+    if (profileData.engagement) {
+      for (let i = 0; i < profileData.engagement.length; i++) {
+        if (profileData.engagement[i].upvotedPostId === comment._id) {
+          setOpeningUpvoteValue(profileData.engagement[i].upVote);
+        }
+      }
+    }
+  }, [profileData.engagement]);
+
+  // update client with current upvote value
+
+  useEffect(() => {
+    if (openingUpvoteValue === 0) {
+      setCommentDownVoted(false);
+      setCommentUpVoted(false);
+    } else if (openingUpvoteValue === 1) {
+      setCommentDownVoted(false);
+      setCommentUpVoted(true);
+    } else if (openingUpvoteValue === -1) {
+      setCommentDownVoted(true);
+      setCommentUpVoted(false);
+    }
+  }, [openingUpvoteValue]);
 
   const handleUpVote = async (direction) => {
     if (loggedIn) {
+      let userlogValue = 0;
       let amount = comment.upVotes;
 
       if (direction === "up") {
         if (commentDownVoted === true && commentUpVoted === false) {
           setCommentUpVoted(true);
           setCommentDownVoted(false);
+          userlogValue = 1;
           amount = amount + 2;
         } else if (commentDownVoted === false && commentUpVoted === false) {
           setCommentUpVoted(true);
           amount = amount + 1;
+          userlogValue = 1;
         } else if (commentDownVoted === false && commentUpVoted === true) {
           setCommentUpVoted(false);
           amount = amount - 1;
+          userlogValue = 0;
         }
       } else {
         if (commentUpVoted === true && commentDownVoted === false) {
           setCommentDownVoted(true);
           setCommentUpVoted(false);
           amount = amount - 2;
+          userlogValue = -1;
         } else if (commentUpVoted === false && commentDownVoted === false) {
           setCommentDownVoted(true);
           amount = amount - 1;
+          userlogValue = -1;
         } else if (commentUpVoted === false && commentDownVoted === true) {
           setCommentDownVoted(false);
           amount = amount + 1;
+          userlogValue = 0;
         }
       }
 
@@ -90,6 +126,31 @@ const Comment = ({
         console.error("Error creating post:", error.message);
         // Handle network errors or other unexpected errors
       }
+
+      try {
+        const response = await fetch(Url + "/auth/addUpvote", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            upvotedPostId: comment._id,
+            userId: profileData._id,
+            upVote: userlogValue,
+          }),
+        });
+
+        if (response.ok) {
+          console.log("user upvote created successfully");
+          // Handle success: maybe display a success message
+        } else {
+          console.error("Error creating user upvote");
+          // Handle error: maybe display an error message
+        }
+      } catch (error) {
+        console.error("Error creating user upvote:", error.message);
+        // Handle network errors or other unexpected errors
+      }
     } else {
       setLoginMessage("ask a question");
       setLoginMessageActive(true);
@@ -135,6 +196,7 @@ const Comment = ({
               }}
               className="h-4"
               src={upArrow}
+              alt="upArrow"
             ></img>
           </button>
           <p className="mr-1 bold">{comment.upVotes}</p>
@@ -146,6 +208,7 @@ const Comment = ({
               className="h-4"
               src={downArrow}
               onClick={() => handleUpVote("down")}
+              alt="downArrow"
             ></img>
           </button>
         </div>
