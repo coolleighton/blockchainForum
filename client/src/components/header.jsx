@@ -11,7 +11,6 @@ const Header = ({ loggedIn, handleLogout, profileData }) => {
     handleLogout();
     navigate("/login");
     document.body.scrollTop = document.documentElement.scrollTop = 0;
-    window.location.reload();
   };
 
   const handleNavigate = (url) => {
