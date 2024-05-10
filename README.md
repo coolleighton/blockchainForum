@@ -1,2 +1,2 @@
 # blockchainForum
-a block chain forum that only shows messages when logged in
+a block chain forum 
